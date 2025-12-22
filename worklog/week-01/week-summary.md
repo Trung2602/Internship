@@ -1,7 +1,6 @@
-### WEEKLY WORKLOG SUMMARY – TUẦN 1 THỰC TẬP  
-# Thời gian: **27/10/2025 – 01/11/2025**  
-# Thực tập sinh: **Lư Hiếu Trung**  
-# Tuần thực tập: **Tuần 1**
+# WEEKLY WORKLOG SUMMARY – TUẦN 1 THỰC TẬP  
+### Thời gian: **27/10/2025 – 01/11/2025**  
+### Tuần thực tập: **Tuần 1**
 
 ---
 
@@ -157,4 +156,3 @@ Tuần 1 đã giúp xây dựng nền tảng vững chắc về AWS Cloud, tư d
 ---
 
 _Worklog Summary created by: **Lư Hiếu Trung**_  
-📅 _Week 1 Review_
