@@ -155,4 +155,4 @@ Tuần 1 đã giúp xây dựng nền tảng vững chắc về AWS Cloud, tư d
 
 ---
 
-_Worklog Summary created by: **Lư Hiếu Trung**_  
+_Worklog created by: Lư Hiếu Trung_
