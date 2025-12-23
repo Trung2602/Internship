@@ -3,7 +3,7 @@
 ## 📅 Thông tin cơ bản
 - **Ngày**: DD/MM/2025
 - **Thứ**: 
-- **Tuần thực tập**: 2/8
+- **Tuần thực tập**: _/8
 - **Thời gian làm việc**: 18:00 - 22:00
 - **Mood**: [😊/😐/😔] + [Lý do]
 
@@ -104,41 +104,48 @@
 ## 📊 Tự đánh giá
 
 ### Năng suất
-- **Score**: [1-10]
-- **Reason**: [Lý do cho điểm này]
-- **Improvement**: [Cách cải thiện]
+- **Điểm**: [1-10]
+- **Lý do**: [Lý do cho điểm này]
+- **Cách cải thiện**: [Cách cải thiện]
 
 ### Học hỏi
-- **Score**: [1-10]
-- **New Knowledge**: [Kiến thức mới học được]
-- **Application**: [Cách áp dụng kiến thức]
+- **Điểm**: [1-10]
+- **Lý do**: [Lý do cho điểm này]
+- **Cách cải thiện**: [Cách cải thiện]
 
 ### Hợp tác
-- **Score**: [1-10]
-- **Interactions**: [Tương tác với team/mentor]
-- **Contributions**: [Đóng góp cho team]
+- **Điểm**: [1-10]
+- **Lý do**: [Lý do cho điểm này]
+- **Cách cải thiện**: [Cách cải thiện]
 
 ### Mức độ hài lòng tổng thể
-- **Score**: [1-10]
-- **Highlights**: [Điểm nổi bật của ngày]
-- **Areas for Growth**: [Lĩnh vực cần phát triển]
+- **Điểm**: [1-10]
+- **Lý do**: [Lý do cho điểm này]
+- **Cách cải thiện**: [Cách cải thiện]
 
 ## 📎 Tệp đính kèm & Link liên kết
 
-### Code & Projects
-- [GitHub commits](link)
-- [Pull requests](link)
-- [Documentation](link)
+### Tài nguyên học tập
+- [Tài liệu](link)
 
-### Learning Resources
-- [Articles read](link)
-- [Videos watched](link)
-- [Courses completed](link)
+#### - Danh sách các video đã xem:
+#### - Danh sách các **video demo**:
 
-### Screenshots & Demos
-- [AWS Console screenshots]
-- [Application demos]
-- [Architecture diagrams]
+
+### Code & Dự án
+- [Các commit trên GitHub](liên kết)
+- [Các yêu cầu pull](liên kết)
+- [Tài liệu](liên kết)
+
+### Tài liệu học tập
+- [Bài viết đã đọc](liên kết)
+- [Video đã xem](liên kết)
+- [Các khóa học đã hoàn thành](liên kết)
+
+### Ảnh chụp màn hình & Bản demo
+- [Ảnh chụp màn hình AWS Console]
+- [Bản demo ứng dụng]
+- [Sơ đồ kiến ​​trúc]
 
 ---
 
@@ -149,5 +156,5 @@
 **00%**
 
 ---
-*Worklog created by: Lư Hiếu Trung*  
-*Next review: DD/MM/2025*
+_Worklog created by: Lư Hiếu Trung_  
+_Next review: DD/MM/2025_
