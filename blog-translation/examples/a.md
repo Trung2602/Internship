@@ -70,7 +70,7 @@ Nói cách khác,**việc viết các câu chuyện người dùng tốt hơn s�
 
 Trong hướng dẫn này, chúng ta sẽ tận dụng các dịch vụ AI tạo sinh của Amazon, cung cấp nhiều mô hình nền tảng được đào tạo sẵn, có thể truy cập thông qua một nền tảng thống nhất duy nhất.
 **AWS Bedrock** là một dịch vụ được quản lý hoàn toàn, cho phép các nhà phát triển xây dựng, triển khai và mở rộng quy mô các ứng dụng được hỗ trợ bởi AI mà không cần phải quản lý cơ sở hạ tầng. Nó cung cấp quyền truy cập liền mạch vào các mô hình nền tảng hiện đại từ các nhà cung cấp AI hàng đầu, tất cả thông qua một API đơn giản.
-Đối với việc triển khai của chúng ta, chúng ta sử dụng Amazon Nova, một nhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt. Đặc biệt, Nova Lite cung cấp sự kết hợp cân bằng giữa hiệu suất và chi phí, lý tưởng cho việc phân tích dữ liệu dự án và tạo ra những hiểu biết có thể hành động được.
+Đối với việc triển khai của chúng ta, chúng ta sử dụng **Amazon Nova**, một nhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt. Đặc biệt, **Nova Lite cung cấp** sự kết hợp cân bằng giữa hiệu suất và chi phí, lý tưởng cho việc phân tích dữ liệu dự án và tạo ra những hiểu biết có thể hành động được.
 Trong các phần tiếp theo, chúng ta sẽ trình bày cách triển khai dịch vụ này bằng Python, cho thấy cách AI có thể được áp dụng để trích xuất những hiểu biết có ý nghĩa từ dữ liệu dự án Kanban.
 
 ## Phần 4: Kiến trúc Tham chiếu
@@ -81,13 +81,15 @@ Toàn bộ quy trình được thực hiện thông qua một tác vụ AWS Glue
 
 Nhìn chung, kiến ​​trúc này tiếp nhận dữ liệu dự án Kanban từ Trello, làm phong phú thêm dữ liệu bằng siêu dữ liệu theo thời gian và ngữ cảnh, áp dụng phân tích ngữ nghĩa bằng các mô hình AI tạo sinh trên AWS Bedrock, và tạo ra các báo cáo có cấu trúc, dễ đọc cho các bên liên quan đến dự án.
 
+![alt text](image-2.png)
+
 ### Các thành phần cốt lõi
 
-*   **1). 📋 Lớp tích hợp Trello**
-    *   Kết nối với các bảng Trello thông qua API của Trello.
-    *   Truy xuất các bảng, danh sách và thẻ với siêu dữ liệu được làm phong phú.
-    *   Tính toán các chỉ số dựa trên thời gian (ví dụ: số ngày đến hạn).
-    *   Xuất dữ liệu có cấu trúc sang Amazon S3 ở định dạng JSON.
+- **1). 📋 Lớp tích hợp Trello**
+    - Kết nối với các bảng Trello thông qua API của Trello.
+    - Truy xuất các bảng, danh sách và thẻ với siêu dữ liệu được làm phong phú.
+    - Tính toán các chỉ số dựa trên thời gian (ví dụ: số ngày đến hạn).
+    - Xuất dữ liệu có cấu trúc sang Amazon S3 ở định dạng JSON.
 
 *   **2). ✨ Tích hợp AWS Bedrock**
     *   Gọi mô hình Amazon Nova bằng cách sử dụng các lời nhắc tùy chỉnh.
