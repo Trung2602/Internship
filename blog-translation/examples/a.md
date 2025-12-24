@@ -85,45 +85,49 @@ Nhìn chung, kiến ​​trúc này tiếp nhận dữ liệu dự án Kanban t
 
 ### Các thành phần cốt lõi
 
-- **1). 📋 Lớp tích hợp Trello**
+- **1). Lớp tích hợp Trello**
     - Kết nối với các bảng Trello thông qua API của Trello.
     - Truy xuất các bảng, danh sách và thẻ với siêu dữ liệu được làm phong phú.
     - Tính toán các chỉ số dựa trên thời gian (ví dụ: số ngày đến hạn).
     - Xuất dữ liệu có cấu trúc sang Amazon S3 ở định dạng JSON.
 
-*   **2). ✨ Tích hợp AWS Bedrock**
-    *   Gọi mô hình Amazon Nova bằng cách sử dụng các lời nhắc tùy chỉnh.
-    *   Xử lý các tập dữ liệu dự án để tạo ra thông tin chi tiết về ngữ nghĩa.
-    *   Sử dụng các tham số suy luận có thể cấu hình để cân bằng chi phí và độ chính xác.
+- **2). Tích hợp AWS Bedrock**
+    - Gọi mô hình Amazon Nova bằng cách sử dụng các lời nhắc tùy chỉnh.
+    - Xử lý các tập dữ liệu dự án để tạo ra thông tin chi tiết về ngữ nghĩa.
+    - Sử dụng các tham số suy luận có thể cấu hình để cân bằng chi phí và độ chính xác.
 
-*   **3). 📊 Tạo báo cáo (MarkdownPDFReport)**
-    *   Chuyển đổi định dạng Markdown do AI tạo ra thành báo cáo PDF chuyên nghiệp.
-    *   Áp dụng kiểu định dạng tùy chỉnh để dễ đọc và nhất quán.
-    *   Hỗ trợ bảng, danh sách và tóm tắt có cấu trúc.
+- **3). Tạo báo cáo (MarkdownPDFReport)**
+    - Chuyển đổi định dạng Markdown do AI tạo ra thành báo cáo PDF chuyên nghiệp.
+    - Áp dụng kiểu định dạng tùy chỉnh để dễ đọc và nhất quán.
+    - Hỗ trợ bảng, danh sách và tóm tắt có cấu trúc.
 
-*   **4). Dịch vụ hỗ trợ**
-    *   🔐 **AWS Secrets Manager**: lưu trữ an toàn thông tin đăng nhập API Trello
-    *   🪣 **Amazon S3**: lưu trữ các tập dữ liệu, lời nhắc và báo cáo được tạo ra.
-    *   📩 **Amazon SES**: phân phối báo cáo tự động qua email
+- **4). Dịch vụ hỗ trợ**
+    - **AWS Secrets Manager**: lưu trữ an toàn thông tin đăng nhập API Trello
+    - **Amazon S3**: lưu trữ các tập dữ liệu, lời nhắc và báo cáo được tạo ra.
+    - **Amazon SES**: phân phối báo cáo tự động qua email
 
 ## Phần 5: Hướng dẫn Triển khai
 
 Trường hợp sử dụng được trình bày trong hướng dẫn này dựa trên một bảng Trello mô phỏng đại diện cho một dự án phần mềm thương mại điện tử. Bảng này bao gồm các hoạt động phát triển điển hình như triển khai tính năng, các mục tồn đọng, các nhiệm vụ đang thực hiện và các mốc giao hàng, phản ánh sát cách Kanban được sử dụng trong môi trường sản xuất.
 Ví dụ này được thiết kế có chủ đích để giống với một kịch bản dự án thực tế, cho phép chúng ta phân tích cả dữ liệu có cấu trúc (siêu dữ liệu nhiệm vụ, trạng thái, ngày đến hạn) và dữ liệu không có cấu trúc (mô tả và nhận xét). Sơ đồ sau minh họa thiết lập dự án ban đầu và đóng vai trò là đầu vào cho các bước triển khai được mô tả trong các phần tiếp theo.
 
+![alt text](image-3.png)
+
 ### Điều kiện tiên quyết
 
-Trước khi chạy giải pháp, cần phải đáp ứng một số điều kiện tiên quyết của AWS và Trello. Những điều kiện tiên quyết này đảm bảo quyền truy cập an toàn vào dữ liệu dự án, thực thi đúng cách tác vụ Glue và tự động gửi báo cáo.
+Trước khi chạy giải pháp, cần phải đáp ứng một số điều kiện tiên quyết của **AWS** và **Trello**. Những điều kiện tiên quyết này đảm bảo quyền truy cập an toàn vào dữ liệu dự án, thực thi đúng cách tác vụ Glue và tự động gửi báo cáo.
 
-**1).  🔑 Thông tin xác thực API Trello**
+**1). Thông tin xác thực API Trello**
+
 Để truy cập vào các bảng và thẻ Trello bằng lập trình, bạn cần có thông tin xác thực API Trello hợp lệ, bao gồm khóa API và mã thông báo truy cập.
 
-*   **Bước 1: Lấy khóa API**
+- **Bước 1: Lấy khóa API**
     Bạn có thể tạo khóa API từ trang quản trị Trello Power-Ups:
     `https://trello.com/power-ups/admin`
-*   **Bước 2: Tạo mã truy cập**
+- **Bước 2: Tạo mã truy cập**
     Sau khi có khóa API, bạn phải ủy quyền cho ứng dụng của mình và tạo mã thông báo bằng cách sử dụng điểm cuối sau (thay thế `{API_KEY}` bằng khóa của riêng bạn):
     `https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&response_type=token&key={API_KEY}`
+
 Quy trình xác thực này cấp quyền truy cập đọc và ghi vào các tài nguyên của Trello và trả về một mã thông báo mà ứng dụng sẽ sử dụng để truy vấn bảng, danh sách, thẻ và bình luận. Cả khóa API và mã thông báo đều cần được xem là thông tin xác thực nhạy cảm.
 
 **2).  ⚙️ Vai trò AWS IAM**
