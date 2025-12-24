@@ -6,96 +6,67 @@
 - **Tổng số giờ làm việc**: 28 giờ (4 giờ/ngày x 7 ngày)
 
 ## 🎯 Mục tiêu tuần
-- **Phát triển AIChat Service**:
-    - Thiết lập môi trường phát triển (PostgreSQL trên Docker) và tạo Entity classes.
-    - Xây dựng Repository, Service, và REST Controllers cho chat và recommendation APIs.
-    - Tích hợp MapStruct và validation cho DTOs.
-    - Bắt đầu tích hợp Google AI Studio để xử lý ngôn ngữ tự nhiên.
-    - Cấu hình Kafka Consumer để lắng nghe các topic `event-registered`, `event-unregistered`, `event-created` và cập nhật user preferences, event embeddings.
-    - Triển khai WebSocket (Stomp) để hỗ trợ chat thời gian thực.
-    - Tích hợp `pgvector` một cách native với Spring Data JPA để lưu trữ và truy vấn `event_embeddings`.
-    - Hoàn thiện logic tìm kiếm vector gần nhất và API gợi ý sự kiện.
-    - Tích hợp Spring Security với WebSocket để xác thực người dùng chat.
-    - Viết Unit Tests cơ bản cho các Service classes và logic AI.
+- [x] Phát triển AIChat Service:
+    - Nhúng Google AI Studio để xử lý ngôn ngữ tự nhiên.
+    - Cấu hình Kafka Consumer để lắng nghe dữ liệu từ Event Service, cung cấp ngữ cảnh (context) cho AI trả lời về các sự kiện thực tế.
+- [x] Hoàn tất Giai đoạn 3: Phát triển Back-end & Tích hợp AI (trừ phần WebSocket sẽ làm đầu tuần sau).
 
 ## ✅ Thành tựu nổi bật trong tuần (Key Achievements)
 
-### 1. **Hoàn thiện Phát triển AIChat Service Backend**
-- **Mô tả**: AIChat Service đã được phát triển hoàn chỉnh, bao gồm:
-    - Thiết lập PostgreSQL trên Docker, tạo Entity classes (`ChatSession`, `ChatMessage`, `UserPreference`, `EventEmbedding`).
-    - Triển khai Repository, Service, và REST Controllers cho các chức năng chat và gợi ý.
-    - Tích hợp MapStruct, Validation, và Global Exception Handling.
-    - **Tích hợp Google AI Studio**: Thành công trong việc gọi API để xử lý ngôn ngữ tự nhiên và tạo embeddings.
-    - **Tích hợp Kafka Consumer**: Lắng nghe và xử lý các sự kiện `event-registered`, `event-unregistered`, `event-created` để cập nhật sở thích người dùng và `event_embeddings`.
-    - **Chat thời gian thực**: Triển khai WebSocket (STOMP) để hỗ trợ tương tác chat real-time.
-    - **Tìm kiếm vector ngữ nghĩa**: Tích hợp `pgvector` native với Spring Data JPA và triển khai logic tìm kiếm vector gần nhất cho gợi ý sự kiện cá nhân hóa.
-    - **Bảo mật WebSocket**: Tích hợp Spring Security để xác thực và phân quyền cho các phiên chat qua WebSocket.
-- **Ý nghĩa**: AIChat Service hiện là microservice thứ hai hoàn chỉnh, mang lại khả năng chat AI thông minh và gợi ý sự kiện cá nhân hóa cho ứng dụng.
-- **Evidence**: [Link GitHub AIChat Service Repo (final state - placeholder)], [Screenshot Postman test API chat & recommendation]
+### 1. **Phát triển AIChat Service Core**
+- **Mô tả**: Đã khởi tạo và phát triển AIChat Service từ đầu. Tích hợp thành công Google AI Studio, cho phép service nhận prompt và trả về phản hồi từ AI. Xây dựng endpoint `POST /api/v1/ai/chat` chức năng.
+- **Ý nghĩa**: Đặt nền móng cho khả năng AI giao tiếp và tương tác trong ứng dụng.
+- **Evidence**: [Link GitHub AIChat Service Repo - `initial-setup` branch (Cần thêm ảnh/link)], [Screenshot Postman test - AIChat API (Cần thêm ảnh/link)]
 
-### 2. **Tích hợp AI và Dữ liệu Nâng cao**
-- **Mô tả**: Đã thành công trong việc kết nối AIChat Service với Google AI Studio, sử dụng các mô hình ngôn ngữ lớn để xử lý yêu cầu của người dùng và tạo vector embeddings. Đồng thời, đã triển khai cơ chế làm giàu ngữ cảnh cho AI bằng cách kết hợp lịch sử chat, sở thích người dùng và thông tin sự kiện (từ `event_embeddings`) thông qua Kafka.
-- **Ý nghĩa**: Biến ứng dụng từ một nền tảng quản lý sự kiện thông thường thành một hệ thống thông minh, tương tác và cá nhân hóa.
-- **Evidence**: [Video demo Chatbot tương tác (Frontend mock) với Backend AIChat Service], [Screenshot của bảng `event_embeddings` trong DBeaver]
+### 2. **Tích hợp Kafka Consumer và Contextual AI**
+- **Mô tả**: Đã cấu hình Kafka Consumer để lắng nghe các topic `event-created`, `event-registered`, `event-unregistered` từ Event Service. Dữ liệu sự kiện và hành vi người dùng được parse và lưu trữ vào PostgreSQL (`event_embeddings`, `user_preferences`). Logic gợi ý sự kiện cá nhân hóa (`GET /api/v1/ai/recommend/events`) đã được phát triển, sử dụng `user_preferences` và `event_embeddings` để cung cấp các gợi ý phù hợp. AI cũng đã được điều chỉnh prompt để sử dụng ngữ cảnh sự kiện.
+- **Ý nghĩa**: Biến AIChat Service thành một Microservice thông minh, có khả năng hiểu ngữ cảnh và cá nhân hóa trải nghiệm người dùng, tuân thủ kiến trúc Event-Driven.
+- **Evidence**: [Code commit - `personalized-recommendation-commit` (Cần thêm ảnh/link)], [Screenshot DBeaver/pgAdmin - `event_embeddings` & `user_preferences` tables (Cần thêm ảnh/link)]
 
-### 3. **Đảm bảo Tính Năng Real-time và Bảo mật**
-- **Mô tả**: Việc triển khai WebSocket cho chat real-time cùng với tích hợp Spring Security để bảo mật kênh giao tiếp này đã được hoàn tất, bao gồm cả xác thực qua JWT (giả định) và phân quyền dựa trên `ChannelInterceptor`.
-- **Ý nghĩa**: Cung cấp trải nghiệm người dùng mượt mà và an toàn cho chức năng chat, một yếu tố then chốt của AIChat Service.
-- **Evidence**: [Video demo chat real-time (Frontend mock) với Backend WebSocket], [Screenshot cấu hình Spring Security cho WebSocket]
+### 3. **Tăng cường Độ bền và Chất lượng code**
+- **Mô tả**: Đã cấu hình cơ chế commit offset thủ công cho Kafka Consumer, đảm bảo độ bền của tin nhắn và tránh mất dữ liệu. Thêm xử lý lỗi và logging chi tiết cho Kafka Consumers. Tiến hành refactor code và tối ưu hóa các truy vấn database bằng indexing để cải thiện hiệu suất và khả năng bảo trì.
+- **Ý nghĩa**: Nâng cao độ tin cậy và chất lượng của AIChat Service, giảm thiểu rủi ro lỗi trong môi trường Production.
+- **Evidence**: [Code snippet - Manual Offset Commit (Cần thêm ảnh/link)], [Code commit - `optimized-code-commit` (Cần thêm ảnh/link)]
+
+### 4. **Kiểm thử và Hoàn thiện**
+- **Mô tả**: Đã thực hiện kiểm thử toàn diện (unit tests, integration tests, Postman) cho các tính năng cốt lõi của AIChat Service, đảm bảo mọi thứ hoạt động đúng như mong đợi.
+- **Ý nghĩa**: Đảm bảo chất lượng của AIChat Service trước khi chuyển sang các giai đoạn tích hợp phức tạp hơn.
+- **Evidence**: [Screenshot Postman test suite (Cần thêm ảnh/link)], [Code commit - Unit/Integration Tests (Cần thêm ảnh/link)]
 
 ## 📈 Đánh giá tiến độ (Progress Review)
-- **Mục tiêu hoàn thành**: 100% các mục tiêu đặt ra cho tuần này.
-- **So với kế hoạch**: Đã đi đúng lộ trình và hoàn thành xuất sắc toàn bộ AIChat Service Backend.
-- **Trạng thái dự án**: Giai đoạn phát triển Backend (Page Service và AIChat Service) đã hoàn tất. Dự án đã sẵn sàng chuyển sang giai đoạn kiểm thử tích hợp và kết nối Frontend-Backend.
+- **Mục tiêu hoàn thành**: 100% các mục tiêu đặt ra cho tuần này theo Giai đoạn 3 (trừ phần WebSocket sẽ làm đầu tuần sau theo timeline).
+- **So với kế hoạch**: Đã hoàn thành xuất sắc giai đoạn phát triển AIChat Service.
+- **Trạng thái dự án**: AIChat Service đã là một Microservice hoạt động đầy đủ, với khả năng tích hợp AI, xử lý Kafka stream, cá nhân hóa gợi ý và có chất lượng code tốt. Sẵn sàng để tích hợp WebSocket và Frontend.
 
-## 🚧 Phân tích thách thách (Challenges Analysis)
+## 🚧 Phân tích thách thức (Challenges Analysis)
 
-### 1. **Ánh xạ và Truy vấn Kiểu Dữ liệu Vector (pgvector) trong JPA**
-- **Mô tả**: Tích hợp kiểu dữ liệu `VECTOR` của `pgvector` vào Spring Data JPA đòi hỏi cách tiếp cận chuyên biệt để lưu trữ và thực hiện các truy vấn tìm kiếm gần nhất một cách hiệu quả.
-- **Nguyên nhân gốc rễ**: `pgvector` là một extension, không phải kiểu dữ liệu SQL chuẩn, nên JPA không hỗ trợ native.
-- **Cách giải quyết**: Sử dụng thư viện `hibernate-types` để ánh xạ `VECTOR` type một cách native và định nghĩa custom query trong Repository để sử dụng toán tử `<->` của `pgvector`.
-- **Bài học rút ra**: Khi làm việc với các tính năng database nâng cao hoặc tùy chỉnh, cần tìm hiểu các cách mở rộng ORM (JPA/Hibernate) để tận dụng tối đa khả năng của database.
+### 1. **Quản lý Ngữ cảnh và Chất lượng phản hồi của AI**
+- **Mô tả**: Ban đầu, AI có thể trả lời không liên quan dù đã có ngữ cảnh.
+- **Cách giải quyết**: Tinh chỉnh prompt engineering, giới hạn kích thước ngữ cảnh, và hướng dẫn AI cách sử dụng thông tin.
+- **Bài học rút ra**: Prompt engineering là một nghệ thuật, cần thử nghiệm và điều chỉnh liên tục.
 
-### 2. **Quản lý Ngữ cảnh Hội thoại và Thông tin AI**
-- **Mô tả**: Để chatbot AI phản hồi thông minh, việc quản lý và cung cấp ngữ cảnh đầy đủ (lịch sử chat, sở thích người dùng, thông tin sự kiện liên quan) cho Google AI Studio là rất quan trọng nhưng cũng phức tạp.
-- **Nguyên nhân gốc rễ**: Mô hình AI cần nhiều thông tin để đưa ra phản hồi chính xác, và thông tin này đến từ nhiều nguồn khác nhau.
-- **Cách giải quyết**: Triển khai logic lấy lịch sử chat từ database, cập nhật sở thích người dùng từ Kafka, và sử dụng vector embeddings để tìm kiếm thông tin sự kiện liên quan. Tất cả được tổng hợp vào `prompt` gửi đến AI.
-- **Bài học rút ra**: Prompt Engineering và Context Management là những kỹ năng cốt lõi khi xây dựng các ứng dụng AI tương tác.
+### 2. **Đảm bảo Độ bền dữ liệu với Kafka**
+- **Mô tả**: Nguy cơ mất tin nhắn Kafka khi consumer restart nếu không cấu hình đúng offset commit.
+- **Cách giải quyết**: Chuyển sang commit offset thủ công và đảm bảo acknowledge tin nhắn sau khi xử lý thành công.
+- **Bài học rút ra**: Cần hiểu rõ các cơ chế đảm bảo độ bền trong hệ thống phân tán.
 
-### 3. **Bảo mật Giao tiếp Real-time với Spring Security**
-- **Mô tả**: Bảo vệ các kênh giao tiếp WebSocket/STOMP bằng Spring Security phức tạp hơn REST API, đòi hỏi sự hiểu biết về cách xử lý xác thực và phân quyền trong luồng STOMP.
-- **Nguyên nhân gốc rễ**: Cơ chế xác thực của WebSocket khác với HTTP request-response.
-- **Cách giải quyết**: Sử dụng `ChannelInterceptor` để chặn và xử lý các tin nhắn STOMP, trích xuất token xác thực và thiết lập `SecurityContext` cho phiên WebSocket.
-- **Bài học rút ra**: Bảo mật các ứng dụng real-time yêu cầu một cách tiếp cận đa tầng và chuyên biệt, không chỉ đơn thuần áp dụng các cấu hình bảo mật REST thông thường.
+### 3. **Thiết kế Schema cho Hệ thống Gợi ý**
+- **Mô tả**: Khó khăn trong việc thiết kế bảng `user_preferences` linh hoạt và mở rộng.
+- **Cách giải quyết**: Nghiên cứu các ví dụ về schema cho `user_preferences` và sử dụng `UPSERT` để quản lý cập nhật dữ liệu.
+- **Bài học rút ra**: Thiết kế schema database là một bước quan trọng, cần xem xét khả năng mở rộng.
 
 ## 💡 Phát triển kỹ năng (Skills Development)
-- **Kỹ năng Kỹ thuật**:
-    - **AIChat Service Development**: Toàn diện về phát triển microservice AI từ DB đến API, tích hợp AI, Kafka, WebSocket, pgvector.
-    - **Google AI Studio Integration**: Thành thạo tích hợp và tương tác với các mô hình AI bên ngoài.
-    - **Real-time Application Development**: Triển khai WebSocket và STOMP cho các tính năng chat real-time.
-    - **Vector Database & Search**: Làm việc với `pgvector` và triển khai tìm kiếm ngữ nghĩa.
-    - **Advanced Spring Security**: Bảo mật WebSocket và triển khai phân quyền trong môi trường Microservices.
-- **Kỹ năng Mềm**:
-    - **System Design Thinking**: Nâng cao khả năng thiết kế các hệ thống phức tạp, phân tán, tích hợp AI.
-    - **Problem Solving (AI-specific)**: Giải quyết các thách thức đặc thù của ứng dụng AI (context management, embedding, latency).
-    - **Continuous Learning**: Chủ động tìm hiểu và áp dụng các công nghệ mới (pgvector, Google AI Studio SDK).
-    - **Documentation**: Kỹ năng tổng kết và báo cáo tiến độ chi tiết.
+- **Kỹ năng Kỹ thuật**: Spring Boot (AIChat Service), Google AI Studio Integration, Spring Kafka (Consumer, Multi-topic, Manual Offset Commit), JPA/Hibernate (PostgreSQL, Indexing), REST API Development, Recommendation Systems (Basic), Testing (Unit, Integration).
+- **Kỹ năng Mềm**: Lập kế hoạch và cấu trúc dự án, giải quyết vấn đề phức tạp (AI, Kafka), tối ưu hóa hiệu suất, refactoring code, kiểm thử hệ thống, quản lý thông tin.
 
 ## 🚀 Kế hoạch tuần tới (Next Week Planning)
-- **Giai đoạn 4: Tích hợp và Kiểm thử End-to-End (08/12 - 14/12/2025)**
-- **Mục tiêu chính**: Tích hợp Frontend với Backend, kiểm thử toàn bộ hệ thống và triển khai các tính năng phụ trợ.
+- **Giai đoạn 3: Phát triển Back-end & Tích hợp AI (Tiếp tục)**
+- **Giai đoạn 4: Tích hợp Hệ thống & Tối ưu hóa (Bắt đầu)**
+- **Mục tiêu chính**: Hoàn tất Giai đoạn 3 (WebSocket) và bắt đầu Giai đoạn 4 (Tích hợp Frontend).
 - **Nhiệm vụ cụ thể**:
-    - **08/12/2025**: Tổng hợp và gửi `week-summary.md` Tuần 6.
-    - **09/12/2025 - 11/12/2025**:
-        - **Frontend Integration**: Kết nối Frontend (NextJS) với Page Service (REST API) và AIChat Service (REST API & WebSocket).
-        - Triển khai các trang cụ thể để hiển thị dữ liệu từ Page Service (ví dụ: các trang sự kiện được quản lý).
-        - Triển khai giao diện chatbox Frontend và tích hợp với WebSocket.
-        - Xử lý Authentication và Authorization ở Frontend (tích hợp JWT).
-    - **12/12/2025 - 13/12/2025**:
-        - **End-to-End Testing**: Thực hiện kiểm thử toàn bộ luồng người dùng (Frontend <-> Backend) để đảm bảo mọi thứ hoạt động mượt mà.
-        - **Fix bugs**: Sửa các lỗi phát sinh trong quá trình tích hợp và kiểm thử.
-        - **Triển khai Notification Service (tạm thời)**: Thiết kế và triển khai một Notification Service đơn giản hoặc tích hợp Firebase Cloud Messaging cho việc thông báo sự kiện (nếu có thời gian).
+    - **08/12 - 10/12/2025**: Triển khai WebSocket (Stomp) trong AIChat Service để hỗ trợ chat thời gian thực và xử lý luồng dữ liệu bất đồng bộ.
+    - **11/12 - 15/12/2025**: Kết nối Frontend với Page & AI Service. Giải quyết các thách thức về CORS, đồng bộ hóa kiểu dữ liệu và xử lý lỗi giao tiếp giữa các service.
 
 ---
-_Worklog created by: Lư Hiếu Trung_
+_Worklog created by: Lư Hiếu Trung_  
 _Next review: 08/12/2025_

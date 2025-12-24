@@ -50,18 +50,14 @@ Trong bài viết này, tôi trình bày một trường hợp sử dụng thự
 **Trello** là một công cụ quản lý dự án trực tuyến được sử dụng rộng rãi, áp dụng **các nguyên tắc Kanban** thông qua các thẻ boards, bảng lists và cards câu chuyện người dùng. Mỗi thẻ thường đại diện cho một nhiệm vụ, tính năng hoặc câu chuyện người dùng, và bao gồm không chỉ trạng thái mà còn cả văn bản mô tả, nhận xét và lịch sử thay đổi theo thời gian.
 Mặc dù bảng Kanban chủ yếu được thiết kế để con người cộng tác, chúng cũng tạo ra một nguồn dữ liệu văn bản và ngữ cảnh phong phú có thể được phân tích bằng lập trình.
 
-![alt text](image.png)
-
 ### Câu chuyện người dùng như một cấu trúc dữ liệu
 
 Một câu chuyện người dùng được định nghĩa rõ ràng thường tuân theo một cấu trúc nhất quán:
 
--   **Ai**: người yêu cầu (Với tư cách là…)
--   **Cái gì**: mục tiêu (Tôi muốn…)
--   **Tại sao**: Mục đích (Để…)
--   **Tiêu chí chấp nhận**: các điều kiện rõ ràng để hoàn thành
-
-![alt text](image-1.png)
+- **Ai**: người yêu cầu (Với tư cách là…)
+- **Cái gì**: mục tiêu (Tôi muốn…)
+- **Tại sao**: Mục đích (Để…)
+- **Tiêu chí chấp nhận**: các điều kiện rõ ràng để hoàn thành
 
 Cấu trúc này không chỉ hữu ích cho việc điều phối các nhóm, mà còn cung cấp một mô hình ngữ nghĩa rõ ràng có thể được tận dụng bởi các mô hình AI. Khi các nhiệm vụ được viết một cách nhất quán, mô hình có thể dễ dàng hiểu được ý định, phạm vi, sự phụ thuộc và kỳ vọng hoàn thành.
 Nói cách khác,**việc viết các câu chuyện người dùng tốt hơn sẽ cải thiện cả sự hiểu biết của con người và khả năng diễn giải của máy móc**, biến nó thành một phương pháp tốt nhất cho việc phân tích dự án dựa trên dữ liệu.
@@ -81,37 +77,36 @@ Toàn bộ quy trình được thực hiện thông qua một tác vụ AWS Glue
 
 Nhìn chung, kiến ​​trúc này tiếp nhận dữ liệu dự án Kanban từ Trello, làm phong phú thêm dữ liệu bằng siêu dữ liệu theo thời gian và ngữ cảnh, áp dụng phân tích ngữ nghĩa bằng các mô hình AI tạo sinh trên AWS Bedrock, và tạo ra các báo cáo có cấu trúc, dễ đọc cho các bên liên quan đến dự án.
 
-![alt text](image-2.png)
-
 ### Các thành phần cốt lõi
 
 - **1). Lớp tích hợp Trello**
-    - Kết nối với các bảng Trello thông qua API của Trello.
-    - Truy xuất các bảng, danh sách và thẻ với siêu dữ liệu được làm phong phú.
-    - Tính toán các chỉ số dựa trên thời gian (ví dụ: số ngày đến hạn).
-    - Xuất dữ liệu có cấu trúc sang Amazon S3 ở định dạng JSON.
+
+  - Kết nối với các bảng Trello thông qua API của Trello.
+  - Truy xuất các bảng, danh sách và thẻ với siêu dữ liệu được làm phong phú.
+  - Tính toán các chỉ số dựa trên thời gian (ví dụ: số ngày đến hạn).
+  - Xuất dữ liệu có cấu trúc sang Amazon S3 ở định dạng JSON.
 
 - **2). Tích hợp AWS Bedrock**
-    - Gọi mô hình Amazon Nova bằng cách sử dụng các lời nhắc tùy chỉnh.
-    - Xử lý các tập dữ liệu dự án để tạo ra thông tin chi tiết về ngữ nghĩa.
-    - Sử dụng các tham số suy luận có thể cấu hình để cân bằng chi phí và độ chính xác.
+
+  - Gọi mô hình Amazon Nova bằng cách sử dụng các lời nhắc tùy chỉnh.
+  - Xử lý các tập dữ liệu dự án để tạo ra thông tin chi tiết về ngữ nghĩa.
+  - Sử dụng các tham số suy luận có thể cấu hình để cân bằng chi phí và độ chính xác.
 
 - **3). Tạo báo cáo (MarkdownPDFReport)**
-    - Chuyển đổi định dạng Markdown do AI tạo ra thành báo cáo PDF chuyên nghiệp.
-    - Áp dụng kiểu định dạng tùy chỉnh để dễ đọc và nhất quán.
-    - Hỗ trợ bảng, danh sách và tóm tắt có cấu trúc.
+
+  - Chuyển đổi định dạng Markdown do AI tạo ra thành báo cáo PDF chuyên nghiệp.
+  - Áp dụng kiểu định dạng tùy chỉnh để dễ đọc và nhất quán.
+  - Hỗ trợ bảng, danh sách và tóm tắt có cấu trúc.
 
 - **4). Dịch vụ hỗ trợ**
-    - **AWS Secrets Manager**: lưu trữ an toàn thông tin đăng nhập API Trello
-    - **Amazon S3**: lưu trữ các tập dữ liệu, lời nhắc và báo cáo được tạo ra.
-    - **Amazon SES**: phân phối báo cáo tự động qua email
+  - **AWS Secrets Manager**: lưu trữ an toàn thông tin đăng nhập API Trello
+  - **Amazon S3**: lưu trữ các tập dữ liệu, lời nhắc và báo cáo được tạo ra.
+  - **Amazon SES**: phân phối báo cáo tự động qua email
 
 ## Phần 5: Hướng dẫn Triển khai
 
 Trường hợp sử dụng được trình bày trong hướng dẫn này dựa trên một bảng Trello mô phỏng đại diện cho một dự án phần mềm thương mại điện tử. Bảng này bao gồm các hoạt động phát triển điển hình như triển khai tính năng, các mục tồn đọng, các nhiệm vụ đang thực hiện và các mốc giao hàng, phản ánh sát cách Kanban được sử dụng trong môi trường sản xuất.
 Ví dụ này được thiết kế có chủ đích để giống với một kịch bản dự án thực tế, cho phép chúng ta phân tích cả dữ liệu có cấu trúc (siêu dữ liệu nhiệm vụ, trạng thái, ngày đến hạn) và dữ liệu không có cấu trúc (mô tả và nhận xét). Sơ đồ sau minh họa thiết lập dự án ban đầu và đóng vai trò là đầu vào cho các bước triển khai được mô tả trong các phần tiếp theo.
-
-![alt text](image-3.png)
 
 ### Điều kiện tiên quyết
 
@@ -123,15 +118,15 @@ Trước khi chạy giải pháp, cần phải đáp ứng một số điều ki
 
 - **Bước 1: Lấy khóa API**
 
-    Bạn có thể tạo khóa API từ trang quản trị Trello Power-Ups:
+  Bạn có thể tạo khóa API từ trang quản trị Trello Power-Ups:
 
-    `https://trello.com/power-ups/admin`
+  `https://trello.com/power-ups/admin`
 
 - **Bước 2: Tạo mã truy cập**
 
-    Sau khi có khóa API, bạn phải ủy quyền cho ứng dụng của mình và tạo mã thông báo bằng cách sử dụng điểm cuối sau (thay thế `{API_KEY}` bằng khóa của riêng bạn):
+  Sau khi có khóa API, bạn phải ủy quyền cho ứng dụng của mình và tạo mã thông báo bằng cách sử dụng điểm cuối sau (thay thế `{API_KEY}` bằng khóa của riêng bạn):
 
-    `https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&response_type=token&key={API_KEY}`
+  `https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&response_type=token&key={API_KEY}`
 
 Quy trình xác thực này cấp quyền truy cập đọc và ghi vào các tài nguyên của Trello và trả về một mã thông báo mà ứng dụng sẽ sử dụng để truy vấn bảng, danh sách, thẻ và bình luận. Cả khóa API và mã thông báo đều cần được xem là thông tin xác thực nhạy cảm.
 
@@ -149,7 +144,7 @@ Vai trò đó phải bao gồm các quyền sau:
 
 Một ví dụ hoàn chỉnh về chính sách IAM với các quyền cần thiết được cung cấp trong kho lưu trữ dự án. Bạn có thể đính kèm chính sách này vào vai trò IAM được sử dụng bởi tác vụ Glue để đảm bảo quy trình chạy từ đầu đến cuối mà không gặp sự cố về quyền.
 
-**3).  📩 Cấu hình Amazon SES**
+**3). 📩 Cấu hình Amazon SES**
 
 Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo. Điều này bao gồm:
 
@@ -166,8 +161,6 @@ Các bước sau đây mô tả toàn bộ quy trình triển khai giải pháp,
 #### **Bước 1: Cấu hình Trình quản lý bí mật**
 
 Hãy lưu trữ thông tin đăng nhập Trello của bạn một cách an toàn trong AWS Secrets Manager, điều này giúp tránh việc mã hóa cứng các thông tin nhạy cảm và tuân thủ các thực tiễn bảo mật tốt nhất của AWS. Vì lý do này, secret nên chứa khóa API và token của Trello ở định dạng JSON.
-
-![alt text](image-4.png)
 
 #### **Bước 2: Thiết lập môi trường AWS Glue**
 
@@ -197,6 +190,7 @@ Các gói phần mềm này được sử dụng cho:
 Lớp Trello bao gồm tất cả các tương tác với API REST của Trello và chịu trách nhiệm truy xuất, làm phong phú và chuẩn bị dữ liệu dự án cho phân tích AI.
 
 **Các thông số đầu vào chính**
+
 - **BUCKET_NAME**: Thùng S3 đích để xuất dữ liệu đã xử lý
 - **API_KEY / API_TOKEN**: Thông tin đăng nhập Trello được lấy một cách an toàn từ Secrets Manager
 - **S3**: Thể hiện của lớp hỗ trợ được sử dụng để ghi dữ liệu lên Amazon S3.
@@ -222,14 +216,14 @@ Lựa chọn thiết kế này mang lại một số lợi ích:
 Lớp này tự động tính toán số ngày còn lại cho đến ngày đến hạn của mỗi nhiệm vụ (time_to_due). Ngữ cảnh thời gian này giúp mô hình AI suy luận về mức độ khẩn cấp, sự chậm trễ và các rủi ro tiềm ẩn.
 Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định dạng CSV hoặc trả về dưới dạng JSON đã lọc, thường chỉ giới hạn ở các nhiệm vụ ở trạng thái "Cần làm" và "Đang làm".
 
-
 #### **Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)**
 
 Để giữ cho sổ tay AWS Glue dễ đọc, có tính mô-đun và dễ bảo trì, tất cả các tương tác với dịch vụ AWS đều được gói gọn trong các lớp trợ giúp nhỏ được xây dựng trên nền tảng boto3.
 
-**aws_s3** 
+**aws_s3**
 
 Xử lý tất cả các hoạt động liên quan đến Amazon S3, bao gồm:
+
 - Đọc các mẫu gợi ý (prompt) và tệp đầu vào
 - Ghi các tập dữ liệu trung gian
 - Lưu trữ báo cáo PDF được tạo ra
@@ -242,6 +236,7 @@ Nhiệm vụ của chúng tôi là truy xuất an toàn các cấu hình nhạy 
 **aws_ses**
 
 Quản lý quy trình gửi email
+
 - Đọc báo cáo PDF được tạo từ S3
 - Tạo nội dung email HTML (mẫu được lưu trữ trong kho lưu trữ)
 - Đính kèm báo cáo PDF
@@ -264,8 +259,8 @@ Cả tập dữ liệu và câu hỏi gợi ý đều có thể được điều
 ```python
 pythonDownloadCopy codeclass AWSBedrock():
     def __init__(self,
-PROMPT:str, 
-DATASET: str, 
+PROMPT:str,
+DATASET: str,
 REGION:str="us-east-1",
 MODEL_ID:str ="amazon.nova-lite-v1:0" ):
         self.prompt = PROMPT
@@ -310,7 +305,7 @@ MODEL_ID:str ="amazon.nova-lite-v1:0" ):
         except Exception as e:
              print(f"Error: {e}")
 
-* 
+*
 ```
 
 Cấu hình suy luận
@@ -333,7 +328,6 @@ Sau nhiều lần thử nghiệm, temperature 0,4 được chọn vì giá trị
 
 Nếu bạn muốn tìm hiểu thêm về cách các thông số này hoạt động, tôi đã đính kèm [bài viết này](https://dev.to/r_elena_mendez_escobar/genai-foundations-chapter-2-prompt-engineering-in-action-unlocking-better-ai-responses-l28).
 
-
 #### **Bước 2.5: Tạo và phân phối báo cáo**
 
 Lớp **MarkdownPDFReport** chuyển đổi mã Markdown do AI tạo ra thành tài liệu PDF chuyên nghiệp, được định dạng đẹp mắt.
@@ -354,15 +348,11 @@ Lớp học chỉ yêu cầu:
 
 Tất cả các kiểu thiết kế hình ảnh đều được tập trung hóa và có thể dễ dàng điều chỉnh để phù hợp với thương hiệu hoặc tiêu chuẩn báo cáo của tổ chức.
 
-Sau khi được tạo, tệp PDF được lưu trữ trong **Amazon S3** * và gửi qua **email** bằng cách sử dụng lớp SES đã mô tả trước đó. Mẫu HTML email được sử dụng để nhúng báo cáo cũng có sẵn trong kho lưu trữ và có thể được chỉnh sửa khi cần.
-
-![alt text](image-5.png)
+Sau khi được tạo, tệp PDF được lưu trữ trong **Amazon S3** \* và gửi qua **email** bằng cách sử dụng lớp SES đã mô tả trước đó. Mẫu HTML email được sử dụng để nhúng báo cáo cũng có sẵn trong kho lưu trữ và có thể được chỉnh sửa khi cần.
 
 **Ví dụ về kết quả: Xem trước email và báo cáo**
 
 Dưới đây là một ví dụ về báo cáo được tạo ra bởi giải pháp. Toàn bộ báo cáo đầu ra bao gồm một tệp PDF sáu trang, nhưng để minh họa, các ảnh chụp màn hình sau đây hiển thị trang bìa và một số bảng tóm tắt được sử dụng để làm nổi bật những thông tin quan trọng của dự án.
-
-![alt text](image-6.png)
 
 ## Phần 6: Kết luận
 
@@ -398,7 +388,6 @@ Mặc dù giải pháp này tạo ra định dạng Markdown và chuyển đổi
 
 Việc lựa chọn mô hình ảnh hưởng đáng kể đến chất lượng của các phân tích chuyên sâu. Các thử nghiệm ban đầu sử dụng Amazon Titan không đưa ra được những kết luận đủ ý nghĩa cho trường hợp sử dụng này. Sau khi đánh giá nhiều lựa chọn, Amazon Nova đã chứng tỏ là lựa chọn phù hợp nhất, mang lại sự cân bằng tốt hơn giữa khả năng hiểu ngữ cảnh, chiều sâu phân tích và tính nhất quán.
 
-
 ## **Lời kết**
 
 Trí tuệ nhân tạo (AI) không nên thay thế các phương pháp quản lý dự án truyền thống, nhưng nó có thể đóng vai trò là lớp hỗ trợ quyết định mạnh mẽ, giúp các nhóm xác định rủi ro sớm hơn, giao tiếp hiệu quả hơn và tập trung thảo luận vào những vấn đề thực sự quan trọng. Với việc lựa chọn tập dữ liệu cẩn thận, thiết kế kịp thời và đánh giá mô hình, phương pháp này có thể được điều chỉnh cho phù hợp với nhiều môi trường dự án và nhu cầu tổ chức khác nhau.
@@ -407,24 +396,24 @@ Trí tuệ nhân tạo (AI) không nên thay thế các phương pháp quản l�
 
 ## 📖 Glossary - Thuật ngữ
 
-| English | Tiếng Việt | Định nghĩa |
-| :--- | :--- | :--- |
-| **Auto Scaling** | Tự động mở rộng quy mô | Khả năng tự động tăng/giảm resources dựa trên demand |
-| **Load Balancer** | Bộ cân bằng tải | Phân phối traffic đến multiple servers |
-| **Microservices** | Kiến trúc microservices | Architectural pattern chia application thành small services |
-| **Kanban** | Kanban | Phương pháp quản lý dự án trực quan tập trung vào hạn chế công việc đang tiến hành và phân phối liên tục. |
-| **Trello** | Trello | Công cụ quản lý dự án trực tuyến áp dụng nguyên tắc Kanban bằng cách sử dụng boards, lists và cards. |
-| **User Story** | Câu chuyện người dùng | Mô tả tính năng từ góc độ người dùng, thường theo cấu trúc: Ai, Cái gì, Tại sao và Tiêu chí chấp nhận. |
-| **Generative AI** | Trí tuệ nhân tạo tạo sinh | Một loại AI có khả năng tạo ra nội dung mới, độc đáo như văn bản, hình ảnh hoặc âm nhạc. |
-| **AWS Bedrock** | AWS Bedrock | Dịch vụ được quản lý hoàn toàn của AWS cung cấp quyền truy cập vào các mô hình nền tảng (Foundation Models) thông qua một API duy nhất. |
-| **Amazon Nova** | Amazon Nova | Nhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt. |
-| **AWS Glue** | AWS Glue | Dịch vụ ETL (Extract, Transform, Load) không máy chủ của AWS để xử lý dữ liệu. |
-| **Amazon S3** | Amazon S3 | Dịch vụ lưu trữ đối tượng có khả năng mở rộng cao của AWS. |
-| **AWS Secrets Manager** | AWS Secrets Manager | Dịch vụ của AWS để lưu trữ an toàn và quản lý thông tin đăng nhập, khóa và các bí mật khác. |
-| **Amazon SES** | Amazon SES | Dịch vụ email đám mây của AWS giúp gửi email tiếp thị, giao dịch và thông báo. |
-| **PCI DSS** | PCI DSS | Tiêu chuẩn bảo mật dữ liệu của ngành thanh toán thẻ, yêu cầu các biện pháp bảo mật để bảo vệ thông tin thẻ tín dụng. |
-| **Prompt Engineering** | Kỹ thuật tạo câu hỏi nhanh | Quá trình thiết kế và tinh chỉnh các câu hỏi hoặc lệnh đầu vào cho mô hình AI để đạt được kết quả mong muốn. |
-| **Idempotency** | Tính Idempotent | Thuộc tính của một hoạt động mà việc thực hiện nhiều lần vẫn tạo ra cùng một kết quả như khi thực hiện một lần. |
+| English                 | Tiếng Việt                 | Định nghĩa                                                                                                                              |
+| :---------------------- | :------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| **Auto Scaling**        | Tự động mở rộng quy mô     | Khả năng tự động tăng/giảm resources dựa trên demand                                                                                    |
+| **Load Balancer**       | Bộ cân bằng tải            | Phân phối traffic đến multiple servers                                                                                                  |
+| **Microservices**       | Kiến trúc microservices    | Architectural pattern chia application thành small services                                                                             |
+| **Kanban**              | Kanban                     | Phương pháp quản lý dự án trực quan tập trung vào hạn chế công việc đang tiến hành và phân phối liên tục.                               |
+| **Trello**              | Trello                     | Công cụ quản lý dự án trực tuyến áp dụng nguyên tắc Kanban bằng cách sử dụng boards, lists và cards.                                    |
+| **User Story**          | Câu chuyện người dùng      | Mô tả tính năng từ góc độ người dùng, thường theo cấu trúc: Ai, Cái gì, Tại sao và Tiêu chí chấp nhận.                                  |
+| **Generative AI**       | Trí tuệ nhân tạo tạo sinh  | Một loại AI có khả năng tạo ra nội dung mới, độc đáo như văn bản, hình ảnh hoặc âm nhạc.                                                |
+| **AWS Bedrock**         | AWS Bedrock                | Dịch vụ được quản lý hoàn toàn của AWS cung cấp quyền truy cập vào các mô hình nền tảng (Foundation Models) thông qua một API duy nhất. |
+| **Amazon Nova**         | Amazon Nova                | Nhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt.                                   |
+| **AWS Glue**            | AWS Glue                   | Dịch vụ ETL (Extract, Transform, Load) không máy chủ của AWS để xử lý dữ liệu.                                                          |
+| **Amazon S3**           | Amazon S3                  | Dịch vụ lưu trữ đối tượng có khả năng mở rộng cao của AWS.                                                                              |
+| **AWS Secrets Manager** | AWS Secrets Manager        | Dịch vụ của AWS để lưu trữ an toàn và quản lý thông tin đăng nhập, khóa và các bí mật khác.                                             |
+| **Amazon SES**          | Amazon SES                 | Dịch vụ email đám mây của AWS giúp gửi email tiếp thị, giao dịch và thông báo.                                                          |
+| **PCI DSS**             | PCI DSS                    | Tiêu chuẩn bảo mật dữ liệu của ngành thanh toán thẻ, yêu cầu các biện pháp bảo mật để bảo vệ thông tin thẻ tín dụng.                    |
+| **Prompt Engineering**  | Kỹ thuật tạo câu hỏi nhanh | Quá trình thiết kế và tinh chỉnh các câu hỏi hoặc lệnh đầu vào cho mô hình AI để đạt được kết quả mong muốn.                            |
+| **Idempotency**         | Tính Idempotent            | Thuộc tính của một hoạt động mà việc thực hiện nhiều lần vẫn tạo ra cùng một kết quả như khi thực hiện một lần.                         |
 
 ## **🔗 Tài liệu tham khảo**
 
@@ -440,7 +429,7 @@ Trí tuệ nhân tạo (AI) không nên thay thế các phương pháp quản l�
 - AWS Learning Resources: Tài nguyên học tập AWS
 - Community Discussions: Thảo luận cộng đồng
 
-### Tools và Services
+### Công cụ và Dịch vụ
 
 - AWS Service 1 (placeholder): Mô tả service
 - AWS Service 2 (placeholder): Mô tả service
@@ -448,18 +437,17 @@ Trí tuệ nhân tạo (AI) không nên thay thế các phương pháp quản l�
 
 ## 💬 Ghi chú của người dịch
 
-### Challenges trong quá trình dịch
+### Thử thách trong quá trình dịch
 
-- **Technical Terms**: Việc dịch các thuật ngữ chuyên ngành như "trí tuệ nhân tạo tạo sinh" (Generative AI), "suy luận AI" (AI inference), "cấu hình suy luận" (inferenceConfig) sao cho vừa chính xác về mặt kỹ thuật, vừa tự nhiên trong tiếng Việt là một thách thức. Tôi đã cố gắng sử dụng các thuật ngữ đã được chấp nhận rộng rãi hoặc giải thích rõ ràng khi cần.
-- **Maintaining Flow and Context**: Đảm bảo luồng văn bản tự nhiên và giữ vững ngữ cảnh của các khái niệm phức tạp về AWS và AI, đặc biệt là khi bài viết liên kết các thành phần khác nhau của một kiến trúc Microservices.
-- **Code Snippets and Technical Details**: Đảm bảo các đoạn code Python và cấu hình JSON/YAML được giữ nguyên định dạng và không bị lỗi khi chuyển đổi.
+- **Điều khoản kỹ thuật**: Việc dịch các thuật ngữ chuyên ngành như "trí tuệ nhân tạo tạo sinh" (Generative AI), "suy luận AI" (AI inference), "cấu hình suy luận" (inferenceConfig) sao cho vừa chính xác về mặt kỹ thuật, vừa tự nhiên trong tiếng Việt là một thách thức. Tôi đã cố gắng sử dụng các thuật ngữ đã được chấp nhận rộng rãi hoặc giải thích rõ ràng khi cần.
+- **Duy trì mạch lạc và bối cảnh**: Đảm bảo luồng văn bản tự nhiên và giữ vững ngữ cảnh của các khái niệm phức tạp về AWS và AI, đặc biệt là khi bài viết liên kết các thành phần khác nhau của một kiến trúc Microservices.
+- **Các đoạn mã và chi tiết kỹ thuật**: Đảm bảo các đoạn code Python và cấu hình JSON/YAML được giữ nguyên định dạng và không bị lỗi khi chuyển đổi.
 
-### Insights gained
+### Thông tin chi tiết đạt được
 
-- **Technical Learning**: Có được cái nhìn sâu sắc hơn về cách tích hợp và tận dụng Trí tuệ nhân tạo tạo sinh (Generative AI) trên AWS Bedrock để giải quyết các vấn đề thực tiễn trong quản lý dự án. Tôi cũng hiểu rõ hơn về kiến trúc và vai trò của từng dịch vụ AWS (Glue, S3, Secrets Manager, SES) trong một quy trình CI/CD tự động.
-- **Language Skills**: Kỹ năng dịch thuật kỹ thuật và diễn giải các khái niệm phức tạp từ tiếng Anh sang tiếng Việt được cải thiện đáng kể, đặc biệt là trong lĩnh vực AI/ML và Cloud Computing.
-- **Industry Knowledge**: Nắm vững hơn về các phương pháp quản lý dự án như Kanban, Trello và cách dữ liệu phi cấu trúc có thể được chuyển đổi thành thông tin hữu ích để hỗ trợ ra quyết định, mang lại giá trị thiết thực trong ngành công nghiệp phần mềm.
-
+- **Công nghệ học được**: Có được cái nhìn sâu sắc hơn về cách tích hợp và tận dụng Trí tuệ nhân tạo tạo sinh (Generative AI) trên AWS Bedrock để giải quyết các vấn đề thực tiễn trong quản lý dự án. Tôi cũng hiểu rõ hơn về kiến trúc và vai trò của từng dịch vụ AWS (Glue, S3, Secrets Manager, SES) trong một quy trình CI/CD tự động.
+- **Kỹ năng ngôn ngữ**: Kỹ năng dịch thuật kỹ thuật và diễn giải các khái niệm phức tạp từ tiếng Anh sang tiếng Việt được cải thiện đáng kể, đặc biệt là trong lĩnh vực AI/ML và Cloud Computing.
+- **Kiến thức chuyên ngành**: Nắm vững hơn về các phương pháp quản lý dự án như Kanban, Trello và cách dữ liệu phi cấu trúc có thể được chuyển đổi thành thông tin hữu ích để hỗ trợ ra quyết định, mang lại giá trị thiết thực trong ngành công nghiệp phần mềm.
 
 ## 🤝 Đóng góp và Feedback
 
@@ -468,4 +456,4 @@ Bài dịch này được thực hiện trong khuôn khổ **FCJ Internship Prog
 **💬 Feedback**: Mọi góp ý để cải thiện chất lượng dịch thuật xin gửi về email trên
 **🔄 Updates**: Bài dịch sẽ được cập nhật dựa trên feedback từ cộng đồng
 
-*© 2024 - Bản dịch thuộc về Lư Hiếu Trung. Vui lòng credit khi sử dụng.*
+_© 2024 - Bản dịch thuộc về Lư Hiếu Trung. Vui lòng credit khi sử dụng._
