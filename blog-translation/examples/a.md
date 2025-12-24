@@ -173,6 +173,8 @@ Hãy lưu trữ thông tin đăng nhập Trello của bạn một cách an toàn
 
 Trong hướng dẫn này, giải pháp được triển khai bằng cách sử dụng sổ tay Python AWS Glue, cung cấp môi trường hoàn toàn được quản lý, không máy chủ để chạy các tác vụ xử lý dữ liệu. Do đó, mã nguồn đầy đủ có sẵn trong kho lưu trữ dự án, bởi vì trong các phần tiếp theo sẽ nêu bật các chi tiết triển khai và quyết định thiết kế quan trọng nhất thay vì cung cấp hướng dẫn chi tiết về mã nguồn.
 
+[Coi thêm trên GitHub](https://github.com/RominaElenaMendezEscobar/aws-trello-ai-tutorial)
+
 #### **Bước 2.1: Cài đặt các gói Python bổ sung**
 
 **AWS Glue** đi kèm với môi trường Python được định sẵn, nhưng giải pháp này yêu cầu thêm các thư viện bổ sung để tương tác với các dịch vụ AWS, xử lý văn bản và tạo báo cáo.
@@ -401,48 +403,69 @@ Việc lựa chọn mô hình ảnh hưởng đáng kể đến chất lượng 
 
 Trí tuệ nhân tạo (AI) không nên thay thế các phương pháp quản lý dự án truyền thống, nhưng nó có thể đóng vai trò là lớp hỗ trợ quyết định mạnh mẽ, giúp các nhóm xác định rủi ro sớm hơn, giao tiếp hiệu quả hơn và tập trung thảo luận vào những vấn đề thực sự quan trọng. Với việc lựa chọn tập dữ liệu cẩn thận, thiết kế kịp thời và đánh giá mô hình, phương pháp này có thể được điều chỉnh cho phù hợp với nhiều môi trường dự án và nhu cầu tổ chức khác nhau.
 
-📖 Glossary - Thuật ngữ
-EnglishTiếng ViệtĐịnh nghĩaAuto ScalingTự động mở rộng quy môKhả năng tự động tăng/giảm resources dựa trên demandLoad BalancerBộ cân bằng tảiPhân phối traffic đến multiple serversMicroservicesKiến trúc microservicesArchitectural pattern chia application thành small servicesKanbanKanbanPhương pháp quản lý dự án trực quan tập trung vào hạn chế công việc đang tiến hành và phân phối liên tục.TrelloTrelloCông cụ quản lý dự án trực tuyến áp dụng nguyên tắc Kanban bằng cách sử dụng boards, lists và cards.User StoryCâu chuyện người dùngMô tả tính năng từ góc độ người dùng, thường theo cấu trúc: Ai, Cái gì, Tại sao và Tiêu chí chấp nhận.Generative AITrí tuệ nhân tạo tạo sinhMột loại AI có khả năng tạo ra nội dung mới, độc đáo như văn bản, hình ảnh hoặc âm nhạc.AWS BedrockAWS BedrockDịch vụ được quản lý hoàn toàn của AWS cung cấp quyền truy cập vào các mô hình nền tảng (Foundation Models) thông qua một API duy nhất.Amazon NovaAmazon NovaNhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt.AWS GlueAWS GlueDịch vụ ETL (Extract, Transform, Load) không máy chủ của AWS để xử lý dữ liệu.Amazon S3Amazon S3Dịch vụ lưu trữ đối tượng có khả năng mở rộng cao của AWS.AWS Secrets ManagerAWS Secrets ManagerDịch vụ của AWS để lưu trữ an toàn và quản lý thông tin đăng nhập, khóa và các bí mật khác.Amazon SESAmazon SESDịch vụ email đám mây của AWS giúp gửi email tiếp thị, giao dịch và thông báo.PCI DSSPCI DSSTiêu chuẩn bảo mật dữ liệu của ngành thanh toán thẻ, yêu cầu các biện pháp bảo mật để bảo vệ thông tin thẻ tín dụng.Prompt EngineeringKỹ thuật tạo câu hỏi nhanhQuá trình thiết kế và tinh chỉnh các câu hỏi hoặc lệnh đầu vào cho mô hình AI để đạt được kết quả mong muốn.IdempotencyTính IdempotentThuộc tính của một hoạt động mà việc thực hiện nhiều lần vẫn tạo ra cùng một kết quả như khi thực hiện một lần.
+---
+
+## 📖 Glossary - Thuật ngữ
+
+| English | Tiếng Việt | Định nghĩa |
+| :--- | :--- | :--- |
+| **Auto Scaling** | Tự động mở rộng quy mô | Khả năng tự động tăng/giảm resources dựa trên demand |
+| **Load Balancer** | Bộ cân bằng tải | Phân phối traffic đến multiple servers |
+| **Microservices** | Kiến trúc microservices | Architectural pattern chia application thành small services |
+| **Kanban** | Kanban | Phương pháp quản lý dự án trực quan tập trung vào hạn chế công việc đang tiến hành và phân phối liên tục. |
+| **Trello** | Trello | Công cụ quản lý dự án trực tuyến áp dụng nguyên tắc Kanban bằng cách sử dụng boards, lists và cards. |
+| **User Story** | Câu chuyện người dùng | Mô tả tính năng từ góc độ người dùng, thường theo cấu trúc: Ai, Cái gì, Tại sao và Tiêu chí chấp nhận. |
+| **Generative AI** | Trí tuệ nhân tạo tạo sinh | Một loại AI có khả năng tạo ra nội dung mới, độc đáo như văn bản, hình ảnh hoặc âm nhạc. |
+| **AWS Bedrock** | AWS Bedrock | Dịch vụ được quản lý hoàn toàn của AWS cung cấp quyền truy cập vào các mô hình nền tảng (Foundation Models) thông qua một API duy nhất. |
+| **Amazon Nova** | Amazon Nova | Nhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt. |
+| **AWS Glue** | AWS Glue | Dịch vụ ETL (Extract, Transform, Load) không máy chủ của AWS để xử lý dữ liệu. |
+| **Amazon S3** | Amazon S3 | Dịch vụ lưu trữ đối tượng có khả năng mở rộng cao của AWS. |
+| **AWS Secrets Manager** | AWS Secrets Manager | Dịch vụ của AWS để lưu trữ an toàn và quản lý thông tin đăng nhập, khóa và các bí mật khác. |
+| **Amazon SES** | Amazon SES | Dịch vụ email đám mây của AWS giúp gửi email tiếp thị, giao dịch và thông báo. |
+| **PCI DSS** | PCI DSS | Tiêu chuẩn bảo mật dữ liệu của ngành thanh toán thẻ, yêu cầu các biện pháp bảo mật để bảo vệ thông tin thẻ tín dụng. |
+| **Prompt Engineering** | Kỹ thuật tạo câu hỏi nhanh | Quá trình thiết kế và tinh chỉnh các câu hỏi hoặc lệnh đầu vào cho mô hình AI để đạt được kết quả mong muốn. |
+| **Idempotency** | Tính Idempotent | Thuộc tính của một hoạt động mà việc thực hiện nhiều lần vẫn tạo ra cùng một kết quả như khi thực hiện một lần. |
 
 ## **🔗 Tài liệu tham khảo**
 
-Tài liệu gốc
+### Tài liệu gốc
 
-* Original Article (placeholder): Bài viết gốc
-* Author's Profile (placeholder): Thông tin tác giả
-* Related Articles (placeholder): Bài viết liên quan
+- Original Article (placeholder): Bài viết gốc
+- Author's Profile (placeholder): Thông tin tác giả
+- Related Articles (placeholder): Bài viết liên quan
 
-Tài liệu tiếng Việt
+### Tài liệu tiếng Việt
 
-* AWS Documentation VN: Tài liệu AWS tiếng Việt
-* AWS Learning Resources: Tài nguyên học tập AWS
-* Community Discussions: Thảo luận cộng đồng
+- AWS Documentation VN: Tài liệu AWS tiếng Việt
+- AWS Learning Resources: Tài nguyên học tập AWS
+- Community Discussions: Thảo luận cộng đồng
 
-Tools và Services
+### Tools và Services
 
-* AWS Service 1 (placeholder): Mô tả service
-* AWS Service 2 (placeholder): Mô tả service
-* Third-party Tools (placeholder): Tools bổ sung
+- AWS Service 1 (placeholder): Mô tả service
+- AWS Service 2 (placeholder): Mô tả service
+- Third-party Tools (placeholder): Tools bổ sung
 
-💬 Ghi chú của người dịch
-Bài dịch này được thực hiện trong khuôn khổ FCJ Internship Program.
-Challenges trong quá trình dịch
+## 💬 Ghi chú của người dịch
 
-* Technical Terms: Việc dịch các thuật ngữ chuyên ngành như "trí tuệ nhân tạo tạo sinh" (Generative AI), "suy luận AI" (AI inference), "cấu hình suy luận" (inferenceConfig) sao cho vừa chính xác về mặt kỹ thuật, vừa tự nhiên trong tiếng Việt là một thách thức. Tôi đã cố gắng sử dụng các thuật ngữ đã được chấp nhận rộng rãi hoặc giải thích rõ ràng khi cần.
-* Maintaining Flow and Context: Đảm bảo luồng văn bản tự nhiên và giữ vững ngữ cảnh của các khái niệm phức tạp về AWS và AI, đặc biệt là khi bài viết liên kết các thành phần khác nhau của một kiến trúc Microservices.
-* Code Snippets and Technical Details: Đảm bảo các đoạn code Python và cấu hình JSON/YAML được giữ nguyên định dạng và không bị lỗi khi chuyển đổi.
+### Challenges trong quá trình dịch
 
-Insights gained
+- **Technical Terms**: Việc dịch các thuật ngữ chuyên ngành như "trí tuệ nhân tạo tạo sinh" (Generative AI), "suy luận AI" (AI inference), "cấu hình suy luận" (inferenceConfig) sao cho vừa chính xác về mặt kỹ thuật, vừa tự nhiên trong tiếng Việt là một thách thức. Tôi đã cố gắng sử dụng các thuật ngữ đã được chấp nhận rộng rãi hoặc giải thích rõ ràng khi cần.
+- **Maintaining Flow and Context**: Đảm bảo luồng văn bản tự nhiên và giữ vững ngữ cảnh của các khái niệm phức tạp về AWS và AI, đặc biệt là khi bài viết liên kết các thành phần khác nhau của một kiến trúc Microservices.
+- **Code Snippets and Technical Details**: Đảm bảo các đoạn code Python và cấu hình JSON/YAML được giữ nguyên định dạng và không bị lỗi khi chuyển đổi.
 
-* Technical Learning: Có được cái nhìn sâu sắc hơn về cách tích hợp và tận dụng Trí tuệ nhân tạo tạo sinh (Generative AI) trên AWS Bedrock để giải quyết các vấn đề thực tiễn trong quản lý dự án. Tôi cũng hiểu rõ hơn về kiến trúc và vai trò của từng dịch vụ AWS (Glue, S3, Secrets Manager, SES) trong một quy trình CI/CD tự động.
-* Language Skills: Kỹ năng dịch thuật kỹ thuật và diễn giải các khái niệm phức tạp từ tiếng Anh sang tiếng Việt được cải thiện đáng kể, đặc biệt là trong lĩnh vực AI/ML và Cloud Computing.
-* Industry Knowledge: Nắm vững hơn về các phương pháp quản lý dự án như Kanban, Trello và cách dữ liệu phi cấu trúc có thể được chuyển đổi thành thông tin hữu ích để hỗ trợ ra quyết định, mang lại giá trị thiết thực trong ngành công nghiệp phần mềm.
+### Insights gained
+
+- **Technical Learning**: Có được cái nhìn sâu sắc hơn về cách tích hợp và tận dụng Trí tuệ nhân tạo tạo sinh (Generative AI) trên AWS Bedrock để giải quyết các vấn đề thực tiễn trong quản lý dự án. Tôi cũng hiểu rõ hơn về kiến trúc và vai trò của từng dịch vụ AWS (Glue, S3, Secrets Manager, SES) trong một quy trình CI/CD tự động.
+- **Language Skills**: Kỹ năng dịch thuật kỹ thuật và diễn giải các khái niệm phức tạp từ tiếng Anh sang tiếng Việt được cải thiện đáng kể, đặc biệt là trong lĩnh vực AI/ML và Cloud Computing.
+- **Industry Knowledge**: Nắm vững hơn về các phương pháp quản lý dự án như Kanban, Trello và cách dữ liệu phi cấu trúc có thể được chuyển đổi thành thông tin hữu ích để hỗ trợ ra quyết định, mang lại giá trị thiết thực trong ngành công nghiệp phần mềm.
 
 
-🤝 Đóng góp và Feedback
-Bài dịch này được thực hiện trong khuôn khổ FCJ Internship Program.
-📧 Liên hệ: trung.luu@example.com
-💬 Feedback: Mọi góp ý để cải thiện chất lượng dịch thuật xin gửi về email trên
-🔄 Updates: Bài dịch sẽ được cập nhật dựa trên feedback từ cộng đồng
+## 🤝 Đóng góp và Feedback
 
-© 2024 - Bản dịch thuộc về Lư Hiếu Trung. Vui lòng credit khi sử dụng.
+Bài dịch này được thực hiện trong khuôn khổ **FCJ Internship Program**.
+**📧 Liên hệ**: trunglu.fcj.aws@gmail.com
+**💬 Feedback**: Mọi góp ý để cải thiện chất lượng dịch thuật xin gửi về email trên
+**🔄 Updates**: Bài dịch sẽ được cập nhật dựa trên feedback từ cộng đồng
+
+*© 2024 - Bản dịch thuộc về Lư Hiếu Trung. Vui lòng credit khi sử dụng.*
