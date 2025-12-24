@@ -179,22 +179,21 @@ Chỉ thị sau đây sẽ cài đặt các thư viện cần thiết trong quá
 
 Các gói phần mềm này được sử dụng cho:
 
-* boto3 / botocore: Bộ SDK của AWS dành cho Python, được sử dụng để tương tác với các dịch vụ như S3, Secrets Manager, Bedrock và SES.
-* markdown: Chuyển đổi Markdown do AI tạo ra thành HTML
-* beautifulsoup4: Phân tích và chuyển đổi nội dung HTML trước khi tạo PDF.
-* reportlab: Tự động tạo tài liệu PDF theo định dạng. Việc chỉ cài đặt các thư viện cần thiết giúp giữ cho tiến trình Glue nhẹ và hiệu quả.
+*   **boto3 / botocore**: Bộ SDK của AWS dành cho Python, được sử dụng để tương tác với các dịch vụ như S3, Secrets Manager, Bedrock và SES.
+*   **markdown**: Chuyển đổi Markdown do AI tạo ra thành HTML
+*   **beautifulsoup4**: Phân tích và chuyển đổi nội dung HTML trước khi tạo PDF.
+*   **reportlab**: Tự động tạo tài liệu PDF theo định dạng. Việc chỉ cài đặt các thư viện cần thiết giúp giữ cho tiến trình Glue nhẹ và hiệu quả.
 
-📋 Bước 2.2: Lớp trích xuất dữ liệu Trello
+**📋 Bước 2.2: Lớp trích xuất dữ liệu Trello**
 Lớp Trello bao gồm tất cả các tương tác với API REST của Trello và chịu trách nhiệm truy xuất, làm phong phú và chuẩn bị dữ liệu dự án cho phân tích AI.
 
-* **Các thông số đầu vào chính**
+*   **Các thông số đầu vào chính**
 
-BUCKET_NAME: Thùng S3 đích để xuất dữ liệu đã xử lý
-API_KEY / API_TOKEN: Thông tin đăng nhập Trello được lấy một cách an toàn từ Secrets Manager
-S3: Thể hiện của lớp hỗ trợ được sử dụng để ghi dữ liệu lên Amazon S3.
+    *   **BUCKET_NAME**: Thùng S3 đích để xuất dữ liệu đã xử lý
+    *   **API_KEY / API_TOKEN**: Thông tin đăng nhập Trello được lấy một cách an toàn từ Secrets Manager
+    *   **S3**: Thể hiện của lớp hỗ trợ được sử dụng để ghi dữ liệu lên Amazon S3.
 
-
-* **Các yếu tố cần cân nhắc khi thiết kế tập dữ liệu**
+*   **Các yếu tố cần cân nhắc khi thiết kế tập dữ liệu**
 
 Mặc dù Trello cung cấp rất nhiều trường thông tin, nhưng cách triển khai của nó cố ý chọn một tập hợp con tối thiểu nhưng có ý nghĩa gồm các cột:
 
@@ -204,19 +203,19 @@ self.DATAFRAME_COLUMNS = [
     'start', 'checkItems', 'checkItemsChecked', 'due', 'time_to_due']
 ```
 
-    Lựa chọn thiết kế này mang lại một số lợi ích:
+*    Lựa chọn thiết kế này mang lại một số lợi ích:
 
     *   Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
-Tránh truyền các trường trống hoặc không được sử dụng.
-Cải thiện khả năng lấy nét mô hình và hiệu quả xử lý.
-
+    *   Tránh truyền các trường trống hoặc không được sử dụng.
+    *   Cải thiện khả năng lấy nét mô hình và hiệu quả xử lý.
 
 * Sự làm giàu về mặt thời gian
+
 Lớp này tự động tính toán số ngày còn lại cho đến ngày đến hạn của mỗi nhiệm vụ (time_to_due). Ngữ cảnh thời gian này giúp mô hình AI suy luận về mức độ khẩn cấp, sự chậm trễ và các rủi ro tiềm ẩn.
 Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định dạng CSV hoặc trả về dưới dạng JSON đã lọc, thường chỉ giới hạn ở các nhiệm vụ ở trạng thái "Cần làm" và "Đang làm".
 
 
-🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)
+**🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)**
 Để giữ cho sổ tay AWS Glue dễ đọc, có tính mô-đun và dễ bảo trì, tất cả các tương tác với dịch vụ AWS đều được gói gọn trong các lớp trợ giúp nhỏ được xây dựng trên nền tảng boto3.
 
 * aws_s3
