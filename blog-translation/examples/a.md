@@ -109,7 +109,7 @@ Ví dụ này được thiết kế có chủ đích để giống với một k
 
 Trước khi chạy giải pháp, cần phải đáp ứng một số điều kiện tiên quyết của AWS và Trello. Những điều kiện tiên quyết này đảm bảo quyền truy cập an toàn vào dữ liệu dự án, thực thi đúng cách tác vụ Glue và tự động gửi báo cáo.
 
-**1). 🔑 Thông tin xác thực API Trello**
+**1).  🔑 Thông tin xác thực API Trello**
 Để truy cập vào các bảng và thẻ Trello bằng lập trình, bạn cần có thông tin xác thực API Trello hợp lệ, bao gồm khóa API và mã thông báo truy cập.
 
 *   **Bước 1: Lấy khóa API**
@@ -120,7 +120,7 @@ Trước khi chạy giải pháp, cần phải đáp ứng một số điều ki
     `https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&response_type=token&key={API_KEY}`
 Quy trình xác thực này cấp quyền truy cập đọc và ghi vào các tài nguyên của Trello và trả về một mã thông báo mà ứng dụng sẽ sử dụng để truy vấn bảng, danh sách, thẻ và bình luận. Cả khóa API và mã thông báo đều cần được xem là thông tin xác thực nhạy cảm.
 
-**2). ⚙️ Vai trò AWS IAM**
+**2).  ⚙️ Vai trò AWS IAM**
 Về phía AWS, cần có một vai trò IAM để thực thi tác vụ AWS Glue và tương tác với các dịch vụ hỗ trợ được sử dụng trong giải pháp này.
 Vai trò đó phải bao gồm các quyền sau:
 
@@ -131,7 +131,7 @@ Vai trò đó phải bao gồm các quyền sau:
 *   Amazon SES (gửi qua email)
 Một ví dụ hoàn chỉnh về chính sách IAM với các quyền cần thiết được cung cấp trong kho lưu trữ dự án. Bạn có thể đính kèm chính sách này vào vai trò IAM được sử dụng bởi tác vụ Glue để đảm bảo quy trình chạy từ đầu đến cuối mà không gặp sự cố về quyền.
 
-**3). 📩 Cấu hình Amazon SES**
+**3).  📩 Cấu hình Amazon SES**
 Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo.
 Điều này bao gồm:
 
@@ -144,7 +144,7 @@ Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi
 
 Các bước sau đây mô tả toàn bộ quy trình triển khai giải pháp, từ quản lý thông tin xác thực bảo mật đến phân tích dựa trên trí tuệ nhân tạo và phân phối báo cáo tự động.
 
-**🔐 Bước 1: Cấu hình Trình quản lý bí mật**
+#### **🔐 Bước 1: Cấu hình Trình quản lý bí mật**
 Hãy lưu trữ thông tin đăng nhập Trello của bạn một cách an toàn trong AWS Secrets Manager, điều này giúp tránh việc mã hóa cứng các thông tin nhạy cảm và tuân thủ các thực tiễn bảo mật tốt nhất của AWS. Vì lý do này, secret nên chứa khóa API và token của Trello ở định dạng JSON.
 
 **⚙️ Bước 2: Thiết lập môi trường AWS Glue**
@@ -215,7 +215,7 @@ Lớp này tự động tính toán số ngày còn lại cho đến ngày đế
 Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định dạng CSV hoặc trả về dưới dạng JSON đã lọc, thường chỉ giới hạn ở các nhiệm vụ ở trạng thái "Cần làm" và "Đang làm".
 
 
-**🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)**
+#### **🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)**
 Để giữ cho sổ tay AWS Glue dễ đọc, có tính mô-đun và dễ bảo trì, tất cả các tương tác với dịch vụ AWS đều được gói gọn trong các lớp trợ giúp nhỏ được xây dựng trên nền tảng boto3.
 
 - **aws_s3** 
@@ -228,10 +228,12 @@ Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định d
 
 
 - **aws_secrets_manager**
+
     - Nhiệm vụ của chúng tôi là truy xuất an toàn các cấu hình nhạy cảm từ AWS Secrets Manager, trong trường hợp này là thông tin xác thực API của Trello.
 
 - **aws_ses**
-    - *Quản lý quy trình gửi email*
+
+    - Quản lý quy trình gửi email
         - Đọc báo cáo PDF được tạo từ S3
         - Tạo nội dung email HTML (mẫu được lưu trữ trong kho lưu trữ)
         - Đính kèm báo cáo PDF
