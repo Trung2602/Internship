@@ -56,7 +56,7 @@ Mặc dù bảng Kanban chủ yếu được thiết kế để con người c�
 
 Một câu chuyện người dùng được định nghĩa rõ ràng thường tuân theo một cấu trúc nhất quán:
 
-*   **Ai**: người yêu cầu (Với tư cách là…)
+-   **Ai**: người yêu cầu (Với tư cách là…)
 *   **Cái gì**: mục tiêu (Tôi muốn…)
 *   **Tại sao**: Mục đích (Để…)
 *   **Tiêu chí chấp nhận**: các điều kiện rõ ràng để hoàn thành
