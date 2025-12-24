@@ -154,7 +154,7 @@ Một ví dụ hoàn chỉnh về chính sách IAM với các quyền cần thi�
 Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo. Điều này bao gồm:
 
 - [x] Xác minh ít nhất một địa chỉ email hoặc tên miền người gửi (danh tính SES)
- [x] Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
+- [x] Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
 - [x] Xác nhận vùng SES khớp với vùng được sử dụng bởi tác vụ Glue
 
 Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi các báo cáo PDF đã tạo cho các bên liên quan như một phần của quá trình thực thi quy trình.
@@ -163,17 +163,17 @@ Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi
 
 Các bước sau đây mô tả toàn bộ quy trình triển khai giải pháp, từ quản lý thông tin xác thực bảo mật đến phân tích dựa trên trí tuệ nhân tạo và phân phối báo cáo tự động.
 
-#### **🔐 Bước 1: Cấu hình Trình quản lý bí mật**
+#### **Bước 1: Cấu hình Trình quản lý bí mật**
 
 Hãy lưu trữ thông tin đăng nhập Trello của bạn một cách an toàn trong AWS Secrets Manager, điều này giúp tránh việc mã hóa cứng các thông tin nhạy cảm và tuân thủ các thực tiễn bảo mật tốt nhất của AWS. Vì lý do này, secret nên chứa khóa API và token của Trello ở định dạng JSON.
 
 ![alt text](image-4.png)
 
-#### **⚙️ Bước 2: Thiết lập môi trường AWS Glue**
+#### **Bước 2: Thiết lập môi trường AWS Glue**
 
 Trong hướng dẫn này, giải pháp được triển khai bằng cách sử dụng sổ tay Python AWS Glue, cung cấp môi trường hoàn toàn được quản lý, không máy chủ để chạy các tác vụ xử lý dữ liệu. Do đó, mã nguồn đầy đủ có sẵn trong kho lưu trữ dự án, bởi vì trong các phần tiếp theo sẽ nêu bật các chi tiết triển khai và quyết định thiết kế quan trọng nhất thay vì cung cấp hướng dẫn chi tiết về mã nguồn.
 
-#### **📦 Bước 2.1: Cài đặt các gói Python bổ sung**
+##### **Bước 2.1: Cài đặt các gói Python bổ sung**
 
 AWS Glue đi kèm với môi trường Python được định sẵn, nhưng giải pháp này yêu cầu thêm các thư viện bổ sung để tương tác với các dịch vụ AWS, xử lý văn bản và tạo báo cáo.
 
