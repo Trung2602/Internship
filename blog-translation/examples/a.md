@@ -153,9 +153,9 @@ Một ví dụ hoàn chỉnh về chính sách IAM với các quyền cần thi�
 
 Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo. Điều này bao gồm:
 
-*   [x] Xác minh ít nhất một địa chỉ email hoặc tên miền người gửi (danh tính SES)
-*   [x] Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
-*   [x] Xác nhận vùng SES khớp với vùng được sử dụng bởi tác vụ Glue
+- [x] Xác minh ít nhất một địa chỉ email hoặc tên miền người gửi (danh tính SES)
+ [x] Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
+- [x] Xác nhận vùng SES khớp với vùng được sử dụng bởi tác vụ Glue
 
 Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi các báo cáo PDF đã tạo cho các bên liên quan như một phần của quá trình thực thi quy trình.
 
