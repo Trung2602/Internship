@@ -203,9 +203,8 @@ self.DATAFRAME_COLUMNS = [
     'start', 'checkItems', 'checkItemsChecked', 'due', 'time_to_due']
 ```
 
-*    Lựa chọn thiết kế này mang lại một số lợi ích 
+    Lựa chọn thiết kế này mang lại một số lợi ích 
 
-    *   aaa
     *   Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
     *   Tránh truyền các trường trống hoặc không được sử dụng.
     *   Cải thiện khả năng lấy nét mô hình và hiệu quả xử lý.
