@@ -45,10 +45,12 @@ Trong bài viết này, tôi trình bày một trường hợp sử dụng thự
 
 ### Tìm hiểu về bảng Kanban và Trello
 
-Kanban là một phương pháp quản lý dự án trực quan có nguồn gốc từ hệ thống sản xuất của Toyota. Phương pháp này tập trung vào việc hạn chế công việc đang tiến hành và cho phép phân phối liên tục bằng cách thể hiện các hạng mục công việc ở các giai đoạn khác nhau của quy trình làm việc.
+**Kanban** là một phương pháp quản lý dự án trực quan có nguồn gốc từ hệ thống sản xuất của Toyota. Phương pháp này tập trung vào việc hạn chế công việc đang tiến hành và cho phép phân phối liên tục bằng cách thể hiện các hạng mục công việc ở các giai đoạn khác nhau của quy trình làm việc.
 
-Trello là một công cụ quản lý dự án trực tuyến được sử dụng rộng rãi, áp dụng các nguyên tắc Kanban thông qua các thẻ boards, bảng lists và cards câu chuyện người dùng. Mỗi thẻ thường đại diện cho một nhiệm vụ, tính năng hoặc câu chuyện người dùng, và bao gồm không chỉ trạng thái mà còn cả văn bản mô tả, nhận xét và lịch sử thay đổi theo thời gian.
+**Trello** là một công cụ quản lý dự án trực tuyến được sử dụng rộng rãi, áp dụng **các nguyên tắc Kanban** thông qua các thẻ boards, bảng lists và cards câu chuyện người dùng. Mỗi thẻ thường đại diện cho một nhiệm vụ, tính năng hoặc câu chuyện người dùng, và bao gồm không chỉ trạng thái mà còn cả văn bản mô tả, nhận xét và lịch sử thay đổi theo thời gian.
 Mặc dù bảng Kanban chủ yếu được thiết kế để con người cộng tác, chúng cũng tạo ra một nguồn dữ liệu văn bản và ngữ cảnh phong phú có thể được phân tích bằng lập trình.
+
+![alt text](image.png)
 
 ### Câu chuyện người dùng như một cấu trúc dữ liệu
 
@@ -59,13 +61,15 @@ Một câu chuyện người dùng được định nghĩa rõ ràng thường t
 *   **Tại sao**: Mục đích (Để…)
 *   **Tiêu chí chấp nhận**: các điều kiện rõ ràng để hoàn thành
 
+![alt text](image-1.png)
+
 Cấu trúc này không chỉ hữu ích cho việc điều phối các nhóm, mà còn cung cấp một mô hình ngữ nghĩa rõ ràng có thể được tận dụng bởi các mô hình AI. Khi các nhiệm vụ được viết một cách nhất quán, mô hình có thể dễ dàng hiểu được ý định, phạm vi, sự phụ thuộc và kỳ vọng hoàn thành.
-Nói cách khác, việc viết các câu chuyện người dùng tốt hơn sẽ cải thiện cả sự hiểu biết của con người và khả năng diễn giải của máy móc, biến nó thành một phương pháp tốt nhất cho việc phân tích dự án dựa trên dữ liệu.
+Nói cách khác,**việc viết các câu chuyện người dùng tốt hơn sẽ cải thiện cả sự hiểu biết của con người và khả năng diễn giải của máy móc**, biến nó thành một phương pháp tốt nhất cho việc phân tích dự án dựa trên dữ liệu.
 
 ## Phần 3: AWS Bedrock và Amazon Nova
 
 Trong hướng dẫn này, chúng ta sẽ tận dụng các dịch vụ AI tạo sinh của Amazon, cung cấp nhiều mô hình nền tảng được đào tạo sẵn, có thể truy cập thông qua một nền tảng thống nhất duy nhất.
-AWS Bedrock là một dịch vụ được quản lý hoàn toàn, cho phép các nhà phát triển xây dựng, triển khai và mở rộng quy mô các ứng dụng được hỗ trợ bởi AI mà không cần phải quản lý cơ sở hạ tầng. Nó cung cấp quyền truy cập liền mạch vào các mô hình nền tảng hiện đại từ các nhà cung cấp AI hàng đầu, tất cả thông qua một API đơn giản.
+**AWS Bedrock** là một dịch vụ được quản lý hoàn toàn, cho phép các nhà phát triển xây dựng, triển khai và mở rộng quy mô các ứng dụng được hỗ trợ bởi AI mà không cần phải quản lý cơ sở hạ tầng. Nó cung cấp quyền truy cập liền mạch vào các mô hình nền tảng hiện đại từ các nhà cung cấp AI hàng đầu, tất cả thông qua một API đơn giản.
 Đối với việc triển khai của chúng ta, chúng ta sử dụng Amazon Nova, một nhóm các mô hình nền tảng của AWS được thiết kế cho các tác vụ như tạo văn bản, phân tích và tóm tắt. Đặc biệt, Nova Lite cung cấp sự kết hợp cân bằng giữa hiệu suất và chi phí, lý tưởng cho việc phân tích dữ liệu dự án và tạo ra những hiểu biết có thể hành động được.
 Trong các phần tiếp theo, chúng ta sẽ trình bày cách triển khai dịch vụ này bằng Python, cho thấy cách AI có thể được áp dụng để trích xuất những hiểu biết có ý nghĩa từ dữ liệu dự án Kanban.
 
@@ -147,14 +151,12 @@ Các bước sau đây mô tả toàn bộ quy trình triển khai giải pháp,
 #### **🔐 Bước 1: Cấu hình Trình quản lý bí mật**
 Hãy lưu trữ thông tin đăng nhập Trello của bạn một cách an toàn trong AWS Secrets Manager, điều này giúp tránh việc mã hóa cứng các thông tin nhạy cảm và tuân thủ các thực tiễn bảo mật tốt nhất của AWS. Vì lý do này, secret nên chứa khóa API và token của Trello ở định dạng JSON.
 
-**⚙️ Bước 2: Thiết lập môi trường AWS Glue**
+#### **⚙️ Bước 2: Thiết lập môi trường AWS Glue**
 Trong hướng dẫn này, giải pháp được triển khai bằng cách sử dụng sổ tay Python AWS Glue, cung cấp môi trường hoàn toàn được quản lý, không máy chủ để chạy các tác vụ xử lý dữ liệu. Do đó, mã nguồn đầy đủ có sẵn trong kho lưu trữ dự án, bởi vì trong các phần tiếp theo sẽ nêu bật các chi tiết triển khai và quyết định thiết kế quan trọng nhất thay vì cung cấp hướng dẫn chi tiết về mã nguồn.
-
-Nếu bạn thấy hướng dẫn này hữu ích, hãy để lại đánh giá ⭐️ và theo dõi tôi để nhận thông báo về các bài viết mới. Sự ủng hộ của bạn giúp tôi phát triển trong cộng đồng công nghệ và tạo ra nhiều nội dung giá trị hơn! 🚀
 
 Logo GitHub RominaElenaMendezEscobar / aws-trello-ai-tutorial
 Quy trình AWS Glue hoàn chỉnh từ đầu đến cuối để trích xuất dữ liệu Trello Kanban, phân tích dữ liệu bằng Amazon Bedrock và tạo báo cáo PDF tự động.
-Mời tôi một ly cà phê
+
 
 🏷️ Phân tích dự án dựa trên dữ liệu: Phân tích dự án Trello Kanban bằng AI trên AWS Bedrock
 Giới thiệu
