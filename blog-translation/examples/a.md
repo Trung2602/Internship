@@ -125,7 +125,7 @@ Trước khi chạy giải pháp, cần phải đáp ứng một số điều ki
 
     Bạn có thể tạo khóa API từ trang quản trị Trello Power-Ups:
 
-    ```https://trello.com/power-ups/admin```
+    `https://trello.com/power-ups/admin`
 
 - **Bước 2: Tạo mã truy cập**
 
@@ -135,24 +135,28 @@ Trước khi chạy giải pháp, cần phải đáp ứng một số điều ki
 
 Quy trình xác thực này cấp quyền truy cập đọc và ghi vào các tài nguyên của Trello và trả về một mã thông báo mà ứng dụng sẽ sử dụng để truy vấn bảng, danh sách, thẻ và bình luận. Cả khóa API và mã thông báo đều cần được xem là thông tin xác thực nhạy cảm.
 
-**2).  ⚙️ Vai trò AWS IAM**
+**2). Vai trò AWS IAM**
+
 Về phía AWS, cần có một vai trò IAM để thực thi tác vụ AWS Glue và tương tác với các dịch vụ hỗ trợ được sử dụng trong giải pháp này.
+
 Vai trò đó phải bao gồm các quyền sau:
 
-*   AWS Glue (thực hiện công việc)
-*   Amazon S3 (lưu trữ và truy xuất dữ liệu)
-*   AWS Secrets Manager (Lưu trữ an toàn thông tin đăng nhập Trello)
-*   Amazon Bedrock (Mô hình AI)
-*   Amazon SES (gửi qua email)
+- AWS Glue (thực hiện công việc)
+- Amazon S3 (lưu trữ và truy xuất dữ liệu)
+- AWS Secrets Manager (Lưu trữ an toàn thông tin đăng nhập Trello)
+- Amazon Bedrock (Mô hình AI)
+- Amazon SES (gửi qua email)
+
 Một ví dụ hoàn chỉnh về chính sách IAM với các quyền cần thiết được cung cấp trong kho lưu trữ dự án. Bạn có thể đính kèm chính sách này vào vai trò IAM được sử dụng bởi tác vụ Glue để đảm bảo quy trình chạy từ đầu đến cuối mà không gặp sự cố về quyền.
 
 **3).  📩 Cấu hình Amazon SES**
-Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo.
-Điều này bao gồm:
+
+Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo. Điều này bao gồm:
 
 *   [x] Xác minh ít nhất một địa chỉ email hoặc tên miền người gửi (danh tính SES)
 *   [x] Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
 *   [x] Xác nhận vùng SES khớp với vùng được sử dụng bởi tác vụ Glue
+
 Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi các báo cáo PDF đã tạo cho các bên liên quan như một phần của quá trình thực thi quy trình.
 
 ### Các bước thực hiện
@@ -160,28 +164,17 @@ Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi
 Các bước sau đây mô tả toàn bộ quy trình triển khai giải pháp, từ quản lý thông tin xác thực bảo mật đến phân tích dựa trên trí tuệ nhân tạo và phân phối báo cáo tự động.
 
 #### **🔐 Bước 1: Cấu hình Trình quản lý bí mật**
+
 Hãy lưu trữ thông tin đăng nhập Trello của bạn một cách an toàn trong AWS Secrets Manager, điều này giúp tránh việc mã hóa cứng các thông tin nhạy cảm và tuân thủ các thực tiễn bảo mật tốt nhất của AWS. Vì lý do này, secret nên chứa khóa API và token của Trello ở định dạng JSON.
 
+![alt text](image-4.png)
+
 #### **⚙️ Bước 2: Thiết lập môi trường AWS Glue**
+
 Trong hướng dẫn này, giải pháp được triển khai bằng cách sử dụng sổ tay Python AWS Glue, cung cấp môi trường hoàn toàn được quản lý, không máy chủ để chạy các tác vụ xử lý dữ liệu. Do đó, mã nguồn đầy đủ có sẵn trong kho lưu trữ dự án, bởi vì trong các phần tiếp theo sẽ nêu bật các chi tiết triển khai và quyết định thiết kế quan trọng nhất thay vì cung cấp hướng dẫn chi tiết về mã nguồn.
 
-Logo GitHub RominaElenaMendezEscobar / aws-trello-ai-tutorial
-Quy trình AWS Glue hoàn chỉnh từ đầu đến cuối để trích xuất dữ liệu Trello Kanban, phân tích dữ liệu bằng Amazon Bedrock và tạo báo cáo PDF tự động.
+#### **📦 Bước 2.1: Cài đặt các gói Python bổ sung**
 
-
-🏷️ Phân tích dự án dựa trên dữ liệu: Phân tích dự án Trello Kanban bằng AI trên AWS Bedrock
-Giới thiệu
-Các dự án phần mềm hiện đại thường liên quan đến nhiều nhóm phân tán làm việc trên các sáng kiến ​​có độ phức tạp cao, với các bản phát hành thường xuyên và các bản vá lỗi liên tục trong quá trình sản xuất. Mặc dù các công cụ như bảng Kanban giúp tổ chức các nhiệm vụ, các dự án lớn và quy trình làm việc, nhưng chúng cũng tạo ra một lượng lớn dữ liệu phi cấu trúc dưới dạng nhận xét, thay đổi trạng thái và dòng thời gian. Khi số lượng các nhiệm vụ và người đóng góp phụ thuộc lẫn nhau tăng lên, việc hiểu được trạng thái thực sự của dự án và xác định sớm các rủi ro hoặc điểm nghẽn trở nên ngày càng khó khăn. Phân tích thủ công tốn thời gian và thường mang tính chủ quan.
-
-xem trước
-
-Trong kho lưu trữ này, tôi trình bày một trường hợp sử dụng thực tiễn tận dụng các dịch vụ AWS và trí tuệ nhân tạo tạo sinh để nâng cao khả năng phân tích và diễn giải dự án. Bằng cách phân tích siêu dữ liệu nhiệm vụ và phát hiện các mẫu ngữ nghĩa trong phần bình luận (như sự mơ hồ, các phụ thuộc ngầm, các định nghĩa bị thiếu hoặc sự mở rộng phạm vi), AI cho phép đưa ra những hiểu biết khách quan hơn, cảnh báo sớm và ra quyết định dựa trên dữ liệu.
-
-🗂️ Cấu trúc thư mục
-Kho lưu trữ…
-
-Xem trên GitHub
-**📦 Bước 2.1: Cài đặt các gói Python bổ sung**
 AWS Glue đi kèm với môi trường Python được định sẵn, nhưng giải pháp này yêu cầu thêm các thư viện bổ sung để tương tác với các dịch vụ AWS, xử lý văn bản và tạo báo cáo.
 
 Chỉ thị sau đây sẽ cài đặt các thư viện cần thiết trong quá trình thực thi:
