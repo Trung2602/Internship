@@ -135,9 +135,9 @@ Một ví dụ hoàn chỉnh về chính sách IAM với các quyền cần thi�
 Cuối cùng, Amazon Simple Email Service (SES) cần được cấu hình để cho phép tự động gửi báo cáo.
 Điều này bao gồm:
 
-*   ☑️ Xác minh ít nhất một địa chỉ email hoặc tên miền người gửi (danh tính SES)
-*   ☑️ Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
-*   ☑️ Xác nhận vùng SES khớp với vùng được sử dụng bởi tác vụ Glue
+*   [x] Xác minh ít nhất một địa chỉ email hoặc tên miền người gửi (danh tính SES)
+*   [x] Đảm bảo tài khoản AWS của bạn có đủ giới hạn gửi.
+*   [x] Xác nhận vùng SES khớp với vùng được sử dụng bởi tác vụ Glue
 Sau khi cấu hình xong, SES sẽ được sử dụng để tự động gửi các báo cáo PDF đã tạo cho các bên liên quan như một phần của quá trình thực thi quy trình.
 
 ### Các bước thực hiện
@@ -175,3 +175,29 @@ Chỉ thị sau đây sẽ cài đặt các thư viện cần thiết trong quá
 
 ```python
 %additional_python_modules boto3==1.34.34,botocore==1.34.34,markdown==3.5.2,beautifulsoup4==4.12.3,reportlab==4.0.8
+
+
+Các gói phần mềm này được sử dụng cho:
+
+* boto3 / botocore: Bộ SDK của AWS dành cho Python, được sử dụng để tương tác với các dịch vụ như S3, Secrets Manager, Bedrock và SES.
+* markdown: Chuyển đổi Markdown do AI tạo ra thành HTML
+* beautifulsoup4: Phân tích và chuyển đổi nội dung HTML trước khi tạo PDF.
+* reportlab: Tự động tạo tài liệu PDF theo định dạng. Việc chỉ cài đặt các thư viện cần thiết giúp giữ cho tiến trình Glue nhẹ và hiệu quả.
+
+📋 Bước 2.2: Lớp trích xuất dữ liệu Trello
+Lớp Trello bao gồm tất cả các tương tác với API REST của Trello và chịu trách nhiệm truy xuất, làm phong phú và chuẩn bị dữ liệu dự án cho phân tích AI.
+
+* **Các thông số đầu vào chính**
+
+BUCKET_NAME: Thùng S3 đích để xuất dữ liệu đã xử lý
+API_KEY / API_TOKEN: Thông tin đăng nhập Trello được lấy một cách an toàn từ Secrets Manager
+S3: Thể hiện của lớp hỗ trợ được sử dụng để ghi dữ liệu lên Amazon S3.
+
+
+* **Các yếu tố cần cân nhắc khi thiết kế tập dữ liệu**
+Mặc dù Trello cung cấp rất nhiều trường thông tin, nhưng cách triển khai của nó cố ý chọn một tập hợp con tối thiểu nhưng có ý nghĩa gồm các cột:
+
+```python
+self.DATAFRAME_COLUMNS = [
+    'id', 'dueComplete', 'desc', 'listName', 'name',
+    'start', 'checkItems', 'checkItemsChecked', 'due', 'time_to_due']
