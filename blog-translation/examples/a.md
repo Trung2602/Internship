@@ -204,15 +204,14 @@ self.DATAFRAME_COLUMNS = [
     'start', 'checkItems', 'checkItemsChecked', 'due', 'time_to_due']
 ```
 
-* Lựa chọn thiết kế này mang lại một số lợi ích:
+    Lựa chọn thiết kế này mang lại một số lợi ích:
 
-Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
+    *   Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
 Tránh truyền các trường trống hoặc không được sử dụng.
 Cải thiện khả năng lấy nét mô hình và hiệu quả xử lý.
 
 
-* 
-Sự làm giàu về mặt thời gian
+* Sự làm giàu về mặt thời gian
 Lớp này tự động tính toán số ngày còn lại cho đến ngày đến hạn của mỗi nhiệm vụ (time_to_due). Ngữ cảnh thời gian này giúp mô hình AI suy luận về mức độ khẩn cấp, sự chậm trễ và các rủi ro tiềm ẩn.
 Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định dạng CSV hoặc trả về dưới dạng JSON đã lọc, thường chỉ giới hạn ở các nhiệm vụ ở trạng thái "Cần làm" và "Đang làm".
 
@@ -220,8 +219,7 @@ Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định d
 🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)
 Để giữ cho sổ tay AWS Glue dễ đọc, có tính mô-đun và dễ bảo trì, tất cả các tương tác với dịch vụ AWS đều được gói gọn trong các lớp trợ giúp nhỏ được xây dựng trên nền tảng boto3.
 
-* 
-aws_s3
+* aws_s3
 Xử lý tất cả các hoạt động liên quan đến Amazon S3, bao gồm:
 
 Các mẫu gợi ý đọc và tệp đầu vào
