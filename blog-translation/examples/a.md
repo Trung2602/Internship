@@ -204,6 +204,7 @@ self.DATAFRAME_COLUMNS = [
 ```
 
 *    Lựa chọn thiết kế này mang lại một số lợi ích 
+
     *   aaa
     *   Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
     *   Tránh truyền các trường trống hoặc không được sử dụng.
