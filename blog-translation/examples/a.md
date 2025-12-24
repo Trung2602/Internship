@@ -173,7 +173,7 @@ AWS Glue đi kèm với môi trường Python được định sẵn, nhưng gi�
 
 Chỉ thị sau đây sẽ cài đặt các thư viện cần thiết trong quá trình thực thi:
 
-```python
+``` python
 %additional_python_modules boto3==1.34.34,botocore==1.34.34,markdown==3.5.2,beautifulsoup4==4.12.3,reportlab==4.0.8
 ```
 
@@ -197,7 +197,8 @@ S3: Thể hiện của lớp hỗ trợ được sử dụng để ghi dữ li�
 * **Các yếu tố cần cân nhắc khi thiết kế tập dữ liệu**
 Mặc dù Trello cung cấp rất nhiều trường thông tin, nhưng cách triển khai của nó cố ý chọn một tập hợp con tối thiểu nhưng có ý nghĩa gồm các cột:
 
-```python
+``` python
 self.DATAFRAME_COLUMNS = [
     'id', 'dueComplete', 'desc', 'listName', 'name',
     'start', 'checkItems', 'checkItemsChecked', 'due', 'time_to_due']
+```
