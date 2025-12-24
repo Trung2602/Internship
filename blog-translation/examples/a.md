@@ -122,10 +122,15 @@ Trước khi chạy giải pháp, cần phải đáp ứng một số điều ki
 Để truy cập vào các bảng và thẻ Trello bằng lập trình, bạn cần có thông tin xác thực API Trello hợp lệ, bao gồm khóa API và mã thông báo truy cập.
 
 - **Bước 1: Lấy khóa API**
+
     Bạn có thể tạo khóa API từ trang quản trị Trello Power-Ups:
+
     `https://trello.com/power-ups/admin`
+
 - **Bước 2: Tạo mã truy cập**
+
     Sau khi có khóa API, bạn phải ủy quyền cho ứng dụng của mình và tạo mã thông báo bằng cách sử dụng điểm cuối sau (thay thế `{API_KEY}` bằng khóa của riêng bạn):
+
     `https://trello.com/1/authorize?expiration=never&name=MyApp&scope=read,write&response_type=token&key={API_KEY}`
 
 Quy trình xác thực này cấp quyền truy cập đọc và ghi vào các tài nguyên của Trello và trả về một mã thông báo mà ứng dụng sẽ sử dụng để truy vấn bảng, danh sách, thẻ và bình luận. Cả khóa API và mã thông báo đều cần được xem là thông tin xác thực nhạy cảm.
