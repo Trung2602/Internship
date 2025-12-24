@@ -205,11 +205,11 @@ self.DATAFRAME_COLUMNS = [
 
 *    Lựa chọn thiết kế này mang lại một số lợi ích
 
-    *   Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
+*       Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
     *   Tránh truyền các trường trống hoặc không được sử dụng.
     *   Cải thiện khả năng lấy nét mô hình và hiệu quả xử lý.
 
-* Sự làm giàu về mặt thời gian
+*   Sự làm giàu về mặt thời gian
 
 Lớp này tự động tính toán số ngày còn lại cho đến ngày đến hạn của mỗi nhiệm vụ (time_to_due). Ngữ cảnh thời gian này giúp mô hình AI suy luận về mức độ khẩn cấp, sự chậm trễ và các rủi ro tiềm ẩn.
 Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định dạng CSV hoặc trả về dưới dạng JSON đã lọc, thường chỉ giới hạn ở các nhiệm vụ ở trạng thái "Cần làm" và "Đang làm".
