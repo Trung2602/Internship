@@ -175,7 +175,7 @@ Chỉ thị sau đây sẽ cài đặt các thư viện cần thiết trong quá
 
 ```python
 %additional_python_modules boto3==1.34.34,botocore==1.34.34,markdown==3.5.2,beautifulsoup4==4.12.3,reportlab==4.0.8
-
+```
 
 Các gói phần mềm này được sử dụng cho:
 
