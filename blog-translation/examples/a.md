@@ -205,12 +205,11 @@ self.DATAFRAME_COLUMNS = [
 
 Lựa chọn thiết kế này mang lại một số lợi ích:
 
-    - Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
+* Giảm thiểu việc sử dụng token trong quá trình suy luận AI (chi phí thấp hơn)
 * Tránh truyền các trường trống hoặc không được sử dụng
 * Cải thiện khả năng lấy nét mô hình và hiệu quả xử lý
 
-
-*   Sự làm giàu về mặt thời gian
+*   **Sự làm giàu về mặt thời gian**
 
 Lớp này tự động tính toán số ngày còn lại cho đến ngày đến hạn của mỗi nhiệm vụ (time_to_due). Ngữ cảnh thời gian này giúp mô hình AI suy luận về mức độ khẩn cấp, sự chậm trễ và các rủi ro tiềm ẩn.
 Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định dạng CSV hoặc trả về dưới dạng JSON đã lọc, thường chỉ giới hạn ở các nhiệm vụ ở trạng thái "Cần làm" và "Đang làm".
@@ -219,35 +218,30 @@ Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định d
 **🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)**
 Để giữ cho sổ tay AWS Glue dễ đọc, có tính mô-đun và dễ bảo trì, tất cả các tương tác với dịch vụ AWS đều được gói gọn trong các lớp trợ giúp nhỏ được xây dựng trên nền tảng boto3.
 
-* aws_s3
-Xử lý tất cả các hoạt động liên quan đến Amazon S3, bao gồm:
+- **aws_s3**  
+    - Xử lý tất cả các hoạt động liên quan đến Amazon S3, bao gồm:
+        - Đọc các mẫu gợi ý (prompt) và tệp đầu vào
+        - Ghi các tập dữ liệu trung gian
+        - Lưu trữ báo cáo PDF được tạo ra
+        - Tự động phân vùng kết quả đầu ra theo ngày thực thi
 
-Các mẫu gợi ý đọc và tệp đầu vào
-Viết các tập dữ liệu trung gian
-Báo cáo PDF được tạo ra vẫn còn lưu trữ
-Tự động phân vùng kết quả đầu ra theo ngày thực thi.
 
+- **aws_secrets_manager**
+    - Nhiệm vụ của chúng tôi là truy xuất an toàn các cấu hình nhạy cảm từ AWS Secrets Manager, trong trường hợp này là thông tin xác thực API của Trello.
 
-* 
-aws_secrets_manager
-Nhiệm vụ của chúng tôi là truy xuất an toàn các cấu hình nhạy cảm từ AWS Secrets Manager, trong trường hợp này là thông tin xác thực API của Trello.
-
-* 
-aws_ses
-Quản lý quy trình gửi email:
-
-Đọc báo cáo PDF được tạo từ S3.
-Tạo nội dung email HTML (mẫu được lưu trữ trong kho lưu trữ).
-Đính kèm báo cáo PDF
-Gửi email đến người nhận đã được cấu hình.
+- **aws_ses**
+    - *Quản lý quy trình gửi email*
+        - Đọc báo cáo PDF được tạo từ S3
+        - Tạo nội dung email HTML (mẫu được lưu trữ trong kho lưu trữ)
+        - Đính kèm báo cáo PDF
+        - Gửi email đến người nhận đã được cấu hình
 
 
 
-🧠 Bước 2.4: Chiến lược tích hợp và suy luận AWS Bedrock
+**🧠 Bước 2.4: Chiến lược tích hợp và suy luận AWS Bedrock**
 Lớp AWSBedrock quản lý sự tương tác với Amazon Bedrock, gọi mô hình Amazon Nova Lite để phân tích dữ liệu dự án Trello.
 
-* 
-Đầu vào mô hình
+* **Đầu vào mô hình**
 Mô hình nhận được:
 
 Một tập dữ liệu đã được lọc (JSON) chỉ chứa các nhiệm vụ và trường có liên quan.
