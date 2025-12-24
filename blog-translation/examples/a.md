@@ -218,7 +218,8 @@ Cuối cùng, dữ liệu có thể được xuất sang Amazon S3 ở định d
 **🧩 Bước 2.3: Các lớp hỗ trợ AWS (các lớp trừu tượng boto3)**
 Để giữ cho sổ tay AWS Glue dễ đọc, có tính mô-đun và dễ bảo trì, tất cả các tương tác với dịch vụ AWS đều được gói gọn trong các lớp trợ giúp nhỏ được xây dựng trên nền tảng boto3.
 
-- **aws_s3**  
+- **aws_s3** 
+
     - Xử lý tất cả các hoạt động liên quan đến Amazon S3, bao gồm:
         - Đọc các mẫu gợi ý (prompt) và tệp đầu vào
         - Ghi các tập dữ liệu trung gian
