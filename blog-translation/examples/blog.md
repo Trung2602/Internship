@@ -1,7 +1,7 @@
 # Phân tích dự án dựa trên dữ liệu: Phân tích dự án Trello Kanban bằng AI trên AWS Bedrock
 
-> **📖 Bài viết gốc**: [Link to original article (placeholder)]  
-> **👤 Tác giả**: Romina Elena Mendez Escobar - AI/ML Specialist  
+> **📖 Bài viết gốc**: [Bài gốc](https://dev.to/aws-builders/data-driven-project-analysis-analyzing-trello-kanban-projects-with-ai-on-aws-bedrock-15f4)
+> **👤 Tác giả**: Romina Elena Mendez Escobar
 > **📅 Ngày xuất bản**: 23/12  
 > **🌐 Nguồn**: [Medium/Tech Blog (placeholder)]  
 > **👨‍💻 Người dịch**: Lư Hiếu Trung - FCJ Intern  
@@ -456,4 +456,4 @@ Bài dịch này được thực hiện trong khuôn khổ **FCJ Internship Prog
 **💬 Feedback**: Mọi góp ý để cải thiện chất lượng dịch thuật xin gửi về email trên
 **🔄 Updates**: Bài dịch sẽ được cập nhật dựa trên feedback từ cộng đồng
 
-_© 2024 - Bản dịch thuộc về Lư Hiếu Trung. Vui lòng credit khi sử dụng._
+_© 2025 - Bản dịch thuộc về Lư Hiếu Trung. Vui lòng credit khi sử dụng._
