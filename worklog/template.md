@@ -35,15 +35,15 @@
 - **Architecture**: [Patterns, best practices]
 
 ### 💡 Khái niệm và lý thuyết
-- **New Concepts**: [Khái niệm mới học được]
-- **Best Practices**: [Best practices áp dụng]
-- **Industry Knowledge**: [Kiến thức ngành, trends]
+- **Khái niệm mới**: [Khái niệm mới học được]
+- **Thực tiễn tốt nhất**: [Best practices áp dụng]
+- **Kiến thức ngành**: [Kiến thức ngành, trends]
 
-### 🤝 Soft Skills
-- **Communication**: [Presentation, writing, collaboration]
-- **Problem Solving**: [Analytical thinking, debugging]
-- **Time Management**: [Planning, prioritization]
-- **Learning**: [Research skills, self-learning]
+### 🤝 Kỹ năng mềm
+- **Giao tiếp**: [Presentation, writing, collaboration]
+- **Giải quyết vấn đề**: [Analytical thinking, debugging]
+- **Quản lý thời gian**: [Planning, prioritization]
+- **Học hỏi**: [Research skills, self-learning]
 
 ## 🚧 Khó khăn và giải pháp
 
@@ -103,25 +103,26 @@
 
 ## 📊 Tự đánh giá
 
-### Năng suất
-- **Điểm**: [1-10]
-- **Lý do**: [Lý do cho điểm này]
-- **Cách cải thiện**: [Cách cải thiện]
+### Năng suất làm việc
+- **Điểm số**: [1–10]
+- **Lý do**: [Giải thích vì sao tự đánh giá mức điểm này]
+- **Cách cải thiện**: [Những việc sẽ làm để nâng cao năng suất]
 
-### Học hỏi
-- **Điểm**: [1-10]
-- **Lý do**: [Lý do cho điểm này]
-- **Cách cải thiện**: [Cách cải thiện]
+### Học tập
+- **Điểm số**: [1–10]
+- **Kiến thức mới học được**: [Công nghệ, kỹ năng hoặc kiến thức mới]
+- **Cách áp dụng**: [Cách áp dụng kiến thức vào công việc hoặc dự án]
 
-### Hợp tác
-- **Điểm**: [1-10]
-- **Lý do**: [Lý do cho điểm này]
-- **Cách cải thiện**: [Cách cải thiện]
+### Làm việc nhóm
+- **Điểm số**: [1–10]
+- **Tương tác**: [Mức độ trao đổi với team / mentor]
+- **Đóng góp**: [Những đóng góp cụ thể cho nhóm hoặc dự án]
 
 ### Mức độ hài lòng tổng thể
-- **Điểm**: [1-10]
-- **Lý do**: [Lý do cho điểm này]
-- **Cách cải thiện**: [Cách cải thiện]
+- **Điểm số**: [1–10]
+- **Điểm nổi bật**: [Những kết quả hoặc trải nghiệm tích cực]
+- **Lĩnh vực cần cải thiện**: [Những điểm còn hạn chế, cần phát triển thêm]
+
 
 ## 📎 Tệp đính kèm & Link liên kết
 
