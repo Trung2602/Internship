@@ -16,15 +16,15 @@ Dự án được thiết kế theo kiến trúc cloud-native, đảm bảo:
 
 Các dịch vụ AWS chính được sử dụng bao gồm: `Amazon S3`, `CloudFront`, `ECS`, `ALB`, `RDS`, `API Gateway`, `NAT Gateway`, `Route 53` và `CloudFormation`. Hệ thống được triển khai theo mô hình **Infrastructure as Code (IaC)** nhằm tự động hóa quá trình triển khai, dễ dàng mở rộng và bảo trì.
 
-### Nội dung
+### Mục lục
 
-- [01 – Mô tả vấn đề](#01-mô-tả-vấn-đề)
-- [02 – Kiến trúc giải pháp](#02-kiến-trúc-giải-pháp)
-- [03 – Triển khai kỹ thuật](#03-triển-khai-kỹ-thuật)
-- [04 – Tiến độ & Cột mốc](#04-tiến-độ--cột-mốc)
-- [05 – Ước tính ngân sách](#05-ước-tính-ngân-sách)
-- [06 – Đánh giá rủi ro](#06-đánh-giá-rủi-ro)
-- [07 – Kết quả mong đợi](#07-kết-quả-mong-đợi)
+- [1 – Mô tả vấn đề](#1-mô-tả-vấn-đề)
+- [2 – Kiến trúc giải pháp](#2-kiến-trúc-giải-pháp)
+- [3 – Triển khai kỹ thuật](#3-triển-khai-kỹ-thuật)
+- [4 – Tiến độ & Cột mốc](#4-tiến-độ--cột-mốc)
+- [5 – Ước tính ngân sách](#5-ước-tính-ngân-sách)
+- [6 – Đánh giá rủi ro](#6-đánh-giá-rủi-ro)
+- [7 – Kết quả mong đợi](#7-kết-quả-mong-đợi)
 
 ---
 
