@@ -18,13 +18,13 @@ Các dịch vụ AWS chính được sử dụng bao gồm: `Amazon S3`, `CloudF
 
 ### Nội dung
 
-- [01 – Mô tả vấn đề](#01-Mô-tả-vấn-đề)
-- [02 – Kiến trúc giải pháp](#02-Kiến-trúc-giải-pháp)
-- [03 – Triển khai kỹ thuật](#03-Triển-khai-kỹ-thuật)
-- [04 – Tiến độ & Cột mốc](#04-Tiến-độ--Cột-mốc)
-- [05 – Ước tính ngân sách](#05-Ước-tính-ngân-sách)
-- [06 – Đánh giá rủi ro](#06-Đánh-giá-rủi-ro)
-- [07 – Kết quả mong đợi](#07-Kết-quả-mong-đợi)
+- [01 – Mô tả vấn đề](#01-mô-tả-vấn-đề)
+- [02 – Kiến trúc giải pháp](#02-kiến-trúc-giải-pháp)
+- [03 – Triển khai kỹ thuật](#03-triển-khai-kỹ-thuật)
+- [04 – Tiến độ & Cột mốc](#04-tiến-độ--cột-mốc)
+- [05 – Ước tính ngân sách](#05-ước-tính-ngân-sách)
+- [06 – Đánh giá rủi ro](#06-đánh-giá-rủi-ro)
+- [07 – Kết quả mong đợi](#07-kết-quả-mong-đợi)
 
 ---
 
