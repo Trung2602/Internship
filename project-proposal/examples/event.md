@@ -27,7 +27,7 @@ Các dịch vụ AWS chính được sử dụng bao gồm: `Amazon S3`, `CloudF
 - [07 – Kết quả kỳ vọng](07-Expected-Outcomes)
 
 ---
-
+# 1. Mô tả vấn đề
 ## 1. Mô tả vấn đề
 
 ### 1.1 Hiện trạng
